@@ -14,6 +14,14 @@ legisvault-frontend/.vite/
 legisvault-api/.env
 legisvault-frontend/.env
 
+# Local Document-Generation Helper Scripts (Root Only — Excluded from Submission)
+/build_pdf.js
+/build_pptx.js
+/generate_images.js
+/generated_assets/
+/package.json
+/package-lock.json
+
 # Logs & OS Artifacts
 *.log
 npm-debug.log*
