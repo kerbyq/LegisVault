@@ -33,9 +33,9 @@
 4. **5-Stage Legislative Reading Workflow Tracking (`OrdinanceDetail.jsx` + `WorkflowTracker.jsx`):** Authorized clerks advance legislative measures sequentially across the 5 statutory stages with session dates and committee notes.
 5. **Administrative Governance & Forensic Auditing (`UserManagement.jsx` & `AuditLogs.jsx`):** Secretariat administrators manage user roles, committees, analytical reports, and inspect JSON-diffed audit trails.
 
-### 1.3 Key Interfaces Evaluated
+### 1.3 Key Interfaces Evaluated (Actual Live System Screenshots)
 ![LegisVault Key Interfaces Overview](ux_case_study_assets/fig1_key_interfaces.png)
-*Figure 1: Composite high-fidelity UI overview of LegisVault's four primary operational screens evaluated against Laws of UX heuristics: (A) Executive Dashboard, (B) Master Document Registry, (C) Multi-Criteria Advanced Search, and (D) Ordinance Detail & 5-Stage Reading Workflow.*
+*Figure 1: Actual live screenshots captured from the running LegisVault React + Tailwind CSS application across its four main screens: (A) Legislative Operations Dashboard (`/dashboard`), (B) Master Legislative Repository (`/documents`), (C) Advanced Legislative Search (`/search`), and (D) Ordinance Detail & 5-Stage Reading Timeline (`/documents/1`).*
 
 ---
 
@@ -69,6 +69,9 @@ A retrospective cognitive-ergonomics audit of `legisvault-frontend` revealed **7
 - **Interface Evidence:** `WorkflowTracker.jsx` chunks the entire statutory legislative journey into exactly **5** sequential milestones (`Draft Received` → `Calendared` → `1st Reading` → `2nd Reading` → `3rd Reading Approval`). `DocumentRepository.jsx` organizes table metadata into **5** columns and **4** filter dropdowns, while `SearchPage.jsx` externalizes active constraints as removable filter pills.
 - **UX Impact Analysis:** Keeping information chunks within the 5–7 item optimum prevents short-term working memory overload, allowing officials to parse any measure's legal posture at a single glance.
 
+![Annotated Live LegisVault Screens — Laws 2.1 to 2.4](ux_case_study_assets/fig2_implicit_laws_part1.png)
+*Figure 2: Annotated live system screenshots locating Jakob's Law [2.1], Fitts's Law [2.2], Hick's Law [2.3], and Miller's Law [2.4] directly on `/dashboard`, `/upload`, and `/documents/1`.*
+
 ### 2.5 Law of Proximity *(Max Wertheimer, 1923)*
 - **Interface Evidence:** `FormField.jsx` binds each persistent `<label>`, input field, helper hint, and `role="alert"` error message inside a tight vertical stack (`space-y-1.5`), separated by generous margins from neighboring fields. Row actions (`View`, `Edit`, `Delete`) sit tightly clustered at the trailing right edge of each record in `DocumentRepository.jsx`.
 - **UX Impact Analysis:** Spatial proximity ensures zero ambiguity between inputs, validation alerts, and record actions—vital for low-vision users operating at 200–400% screen magnification.
@@ -81,6 +84,9 @@ A retrospective cognitive-ergonomics audit of `legisvault-frontend` revealed **7
 - **Interface Evidence:** `tailwind.config.js` and `index.css` enforce a cohesive institutional visual system: Deep Civic Navy (`#0F4C75`), Slate Charcoal (`#1B262C`), high-luminance Surface (`#F8FAFC`), Inter typography, crisp card borders, balanced whitespace, and 3px teal focus indicators.
 - **UX Impact Analysis:** Visual refinement elevates perceived reliability and institutional authority, fostering trust among senior Sangguniang Panlungsod members transitioning from traditional paper ledgers.
 
+![Annotated Live LegisVault Screens — Laws 2.5 to 2.7](ux_case_study_assets/fig3_implicit_laws_part2.png)
+*Figure 3: Annotated live system screenshots locating Law of Proximity [2.5], Law of Similarity [2.6], and Aesthetic-Usability Effect [2.7] directly on `/documents`, `/upload`, and `/login`.*
+
 ---
 
 ## Section 3: UX Recommendations (Laws of UX to Apply)
@@ -92,68 +98,68 @@ Auditing our current React frontend revealed **7 concrete usability friction poi
 - **Proposed UX Law:** **Doherty Threshold** *(Doherty & Thadani, 1982)* — Productivity soars when computer and user interact at `<400ms` so neither waits on the other.
 - **Actionable Re-design Recommendation:** Replace blocking spinners with **content-aware skeleton screens** matching exact KPI cards and table rows (`<100ms` first paint); add **debounced `<400ms` typeahead search suggestions** in `SearchPage.jsx`; and upgrade `UploadDocument.jsx` with a **non-blocking, multi-stage live OCR progress bar** (`Uploading 100%` → `OCR Page 8 of 12` → `Indexing`) plus a **"+ Queue Another Document"** trigger.
 
-![Before vs. Proposed After — Doherty Threshold](ux_case_study_assets/fig2_doherty_threshold.png)
-*Figure 2: Side-by-side Before vs. Proposed After comparison applying the Doherty Threshold.*
+![Before vs. Proposed After — Doherty Threshold](ux_case_study_assets/fig4_doherty_threshold.png)
+*Figure 4: Actual LegisVault `/upload` & `/search` screens (left, annotated) vs. Proposed After (right) applying the Doherty Threshold.*
 
 ---
 
 ### 3.2 Visual Segmentation of High-Density Document Ingestion Forms
-- **Current Issue / Pain Point:** `UploadDocument.jsx` stacks 9+ heterogeneous inputs (file dropzone, Ordinance Number, Title, Author, Committee, Year, Document Type, Reading Status, Abstract, OCR toggle) inside a single flat vertical container, causing visual monotony and scanning fatigue during batch archival sessions.
+- **Current Issue / Pain Point:** In `UploadDocument.jsx` (`/upload`), Card 2 (*"2. Legislative Metadata"*) packs 7 heterogeneous inputs (Measure Number, Author, Title, Classification, Initial Reading Status, Sponsoring Committee, Year Enacted, Abstract) inside a single flat container, mixing bibliographic identity with parliamentary routing and causing scanning fatigue during batch archival sessions.
 - **Proposed UX Law:** **Law of Common Region** *(Stephen Palmer, 1992)* — Elements sharing a clearly bounded perimeter are perceived as a unified functional group.
-- **Actionable Re-design Recommendation:** Segment `UploadDocument.jsx` into **3 distinctly bordered card containers** with numbered section headers: **Section 1** (*Document File & OCR Ingestion*, sky-tinted card), **Section 2** (*Core Bibliographic Metadata*, crisp white card), and **Section 3** (*Legislative Classification & Initial Status*, light slate card). Enclose active filter pills in `SearchPage.jsx` within a dedicated tinted filter tray.
+- **Actionable Re-design Recommendation:** Segment `UploadDocument.jsx` into **3 distinctly bordered card containers** with numbered headers: **Region 1** (*Document Attachment & OCR Pipeline*, sky-tinted card), **Region 2** (*Core Bibliographic Identity*, crisp white card), and **Region 3** (*Parliamentary Routing & Classification*, light slate card).
 
-![Before vs. Proposed After — Law of Common Region](ux_case_study_assets/fig3_common_region.png)
-*Figure 3: Side-by-side Before vs. Proposed After comparison applying the Law of Common Region.*
+![Before vs. Proposed After — Law of Common Region](ux_case_study_assets/fig5_common_region.png)
+*Figure 5: Actual LegisVault `/upload` screen (left, annotated) vs. Proposed After (right) applying the Law of Common Region.*
 
 ---
 
 ### 3.3 Forgiving Legislative Search & Flexible Scanned Image Ingestion
-- **Current Issue / Pain Point:** `SearchPage.jsx` fails to match informal clerk shorthand (e.g., `"ord 2026-89"`) against canonical zero-padded records (`"Ord. No. 2026-089"`), while `UploadDocument.jsx` rejects standard flatbed scanner image outputs (`.jpg`, `.png`, `.tiff`) despite supporting OCR—forcing clerks into external PDF conversion tools.
+- **Current Issue / Pain Point:** Live `/upload` explicitly states *"Supported formats: PDF, Microsoft Word (.doc, .docx)"*—rejecting standard flatbed scanner outputs (`.jpg`, `.png`, `.tiff`) despite supporting OCR—while live `/search` fails to match informal clerk shorthand (e.g., `"ord 2026-89"`) against canonical zero-padded records (`"Ord. No. 2026-089"`).
 - **Proposed UX Law:** **Postel's Law / Robustness Principle** *(Jon Postel, 1980)* — Be liberal in what you accept from humans, and conservative (strict, canonical) in what you store and output.
 - **Actionable Re-design Recommendation:** Add **query auto-normalization and fuzzy matching** in `SearchController.php` / `SearchPage.jsx` (mapping `"ord 2026-89"` → `"Ord. No. 2026-089"` with a transparent confirmation banner), and expand `UploadDocument.jsx` to accept `.jpg`, `.png`, and `.tiff` scans—automatically converting them into standardized archival PDF/A files with OCR text layers and canonical Ordinance Numbers on save.
 
-![Before vs. Proposed After — Postel's Law](ux_case_study_assets/fig4_postels_law.png)
-*Figure 4: Side-by-side Before vs. Proposed After comparison applying Postel's Law.*
+![Before vs. Proposed After — Postel's Law](ux_case_study_assets/fig6_postels_law.png)
+*Figure 6: Actual LegisVault `/upload` & `/search` screens (left, annotated) vs. Proposed After (right) applying Postel's Law.*
 
 ---
 
 ### 3.4 Incomplete Task Visibility, Draft Auto-Save & Stalled Queue Alerts
-- **Current Issue / Pain Point:** Clerks interrupted mid-upload lose all unsaved metadata upon page refresh because `UploadDocument.jsx` lacks draft persistence and field completeness indicators. Simultaneously, `Dashboard.jsx` shows passive aggregate totals (`38 Pending Readings`) that hide stalled measures (`>14 days` in `1st Reading`) and unverified OCR records.
+- **Current Issue / Pain Point:** Clerks interrupted mid-upload lose all unsaved metadata upon page refresh because live `/upload` lacks draft persistence and field completeness indicators. Simultaneously, live `/dashboard` shows passive aggregate totals (`38 In Active Reading`) that hide stalled measures (`>14 days` in `1st Reading`) and unverified OCR records.
 - **Proposed UX Law:** **Zeigarnik Effect** *(Bluma Zeigarnik, 1927)* — People remember and feel psychologically driven to finish uncompleted or interrupted tasks.
 - **Actionable Re-design Recommendation:** Add a sticky **Metadata Completeness Progress Bar** (`75% Complete — 6 of 8 Required Fields`) backed by automatic `localStorage` draft saving and a **"Resume Draft"** banner in `UploadDocument.jsx`. Add an actionable **"Incomplete & Stalled Legislative Actions"** widget to `Dashboard.jsx` surfacing stalled readings, unverified OCR files, and paused drafts with one-click deep links.
 
-![Before vs. Proposed After — Zeigarnik Effect](ux_case_study_assets/fig5_zeigarnik_effect.png)
-*Figure 5: Side-by-side Before vs. Proposed After comparison applying the Zeigarnik Effect.*
+![Before vs. Proposed After — Zeigarnik Effect](ux_case_study_assets/fig7_zeigarnik_effect.png)
+*Figure 7: Actual LegisVault `/dashboard` & `/upload` screens (left, annotated) vs. Proposed After (right) applying the Zeigarnik Effect.*
 
 ---
 
 ### 3.5 Authoritative Archival & 3rd Reading Enactment Confirmation
-- **Current Issue / Pain Point:** Completing major institutional milestones—such as advancing a measure to **3rd Reading Approval (Enactment)** in `WorkflowTracker.jsx` or sealing a digitized archive in `UploadDocument.jsx`—terminates abruptly with an auto-dismissing 4-second `Toast` and immediate redirect, leaving clerks without a verifiable audit receipt or clear next step.
+- **Current Issue / Pain Point:** Completing major institutional milestones—such as clicking *"Advance to 3rd Reading Approval >"* on live `/documents/1` or sealing a digitized archive on `/upload`—terminates abruptly with an auto-dismissing 4-second `Toast`, leaving clerks without a verifiable audit receipt or clear next step.
 - **Proposed UX Law:** **Peak-End Rule** *(Daniel Kahneman, 1999)* — Users judge an experience disproportionately by how they felt at its peak and at its final moment.
 - **Actionable Re-design Recommendation:** Replace ephemeral toasts at milestone peaks with an authoritative **Official Enactment & Archival Receipt Modal** showing the Ordinance Number, 5-of-5 stage confirmation, Audit Trail Receipt ID, SHA-256 archival checksum, OCR accuracy score, PHT timestamp, and three explicit next actions (*Download Audit Receipt*, *View Sealed Record*, *Upload Next Measure*).
 
-![Before vs. Proposed After — Peak-End Rule](ux_case_study_assets/fig6_peak_end_rule.png)
-*Figure 6: Side-by-side Before vs. Proposed After comparison applying the Peak-End Rule.*
+![Before vs. Proposed After — Peak-End Rule](ux_case_study_assets/fig8_peak_end_rule.png)
+*Figure 8: Actual LegisVault `/documents/1` screen (left, annotated) vs. Proposed After (right) applying the Peak-End Rule.*
 
 ---
 
 ### 3.6 OCR-Assisted Smart Metadata Pre-Fill & One-Click Filter Presets
-- **Current Issue / Pain Point:** Even though LegisVault executes OCR, `UploadDocument.jsx` leaves all 7+ metadata fields blank after file upload, forcing clerks to manually transcribe titles, ordinance numbers, authors, and years. In `DocumentRepository.jsx`, all 5 filter dropdowns are exposed simultaneously even for routine daily lookups.
+- **Current Issue / Pain Point:** Even though *"Run Automated OCR Text Recognition on Ingestion"* is checked by default on live `/upload`, all 7 metadata fields below remain blank after file upload, forcing clerks to manually transcribe measure numbers, authors, titles, committees, and years.
 - **Proposed UX Law:** **Tesler's Law / Law of Conservation of Complexity** *(Larry Tesler, 1984)* — Shift irreducible complexity from the human user onto the software system.
-- **Actionable Re-design Recommendation:** Trigger **OCR-Assisted Smart Metadata Pre-Fill** immediately upon file drop, auto-populating Ordinance Number, Title, Author, Committee, and Year with editable confidence badges (`99% Match — Verify`), and add one-click **Saved Filter Presets** (*Pending My Review*, *2026 Ordinances*, *Needs OCR*) above the registry table while keeping granular filters collapsible.
+- **Actionable Re-design Recommendation:** Trigger **OCR-Assisted Smart Metadata Pre-Fill** immediately upon file drop, auto-populating Measure Number, Title, Author, Committee, and Year with editable confidence badges (`99% Match — Verify`), and add one-click **Saved Filter Presets** (*Pending My Review*, *2026 Ordinances*, *Needs OCR*) above the Master Repository table.
 
-![Before vs. Proposed After — Tesler's Law](ux_case_study_assets/fig7_teslers_law.png)
-*Figure 7: Side-by-side Before vs. Proposed After comparison applying Tesler's Law.*
+![Before vs. Proposed After — Tesler's Law](ux_case_study_assets/fig9_teslers_law.png)
+*Figure 9: Actual LegisVault `/upload` screen (left, annotated) vs. Proposed After (right) applying Tesler's Law.*
 
 ---
 
 ### 3.7 Visual Isolation of Primary CTAs, Danger Actions & Urgent Measures
-- **Current Issue / Pain Point:** In `OrdinanceDetail.jsx` and `DocumentRepository.jsx`, toolbar actions (`Download`, `Print`, `Edit`, `Advance Stage`, `Delete`) share uniform visual weight—inviting accidental clicks—and urgent measures calendared for today's regular session blend into routine table rows.
+- **Current Issue / Pain Point:** On live `/documents/1`, **two heavy filled Civic Navy primary buttons** (`Edit Metadata` and `Advance to 3rd Reading Approval >`) compete simultaneously in the same viewport, splitting user attention. Meanwhile, live `/documents` renders all rows identically so urgent measures calendared for today's session blend into routine rows.
 - **Proposed UX Law:** **Von Restorff Effect / Isolation Effect** *(Hedwig von Restorff, 1933)* — Among visually similar items, the single item that differs distinctly captures immediate attention and recall.
-- **Actionable Re-design Recommendation:** Enforce **one dominant filled Civic Navy (`#0F4C75`) primary CTA per viewport** (`Advance to 3rd Reading`), demote secondary utilities to subtle outline/ghost styling, isolate destructive actions (`Delete`) far-right with crimson warning borders, and highlight session-critical rows with a **6px amber left accent bar** and bold **`SESSION TODAY`** badge.
+- **Actionable Re-design Recommendation:** Demote `Edit Metadata` to an outline utility button so **one dominant filled Civic Navy (`#0F4C75`) primary CTA** commands the viewport, isolate destructive actions (`Delete`) far-right with crimson warning borders, and highlight session-critical rows with a **6px amber left accent bar** and bold **`SESSION TODAY`** badge.
 
-![Before vs. Proposed After — Von Restorff Effect](ux_case_study_assets/fig8_von_restorff.png)
-*Figure 8: Side-by-side Before vs. Proposed After comparison applying the Von Restorff Effect.*
+![Before vs. Proposed After — Von Restorff Effect](ux_case_study_assets/fig10_von_restorff.png)
+*Figure 10: Actual LegisVault `/documents/1` & `/documents` screens (left, annotated) vs. Proposed After (right) applying the Von Restorff Effect.*
 
 ---
 
