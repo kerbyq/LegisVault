@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Ensure smooth scrolling when jumping via skip links or anchor navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent text size adjustments on mobile orientation change */
+  body {
+    -webkit-text-size-adjust: 100%;
+    color: #1B262C;
+    background-color: #F8FAFC;
+  }
+}
+
+@layer utilities {
+  /* WCAG 2.2 Level AA Focus Ring: Visible 3px teal ring with 2px offset */
+  .focus-ring {
+    @apply outline-none ring-offset-2 transition-shadow duration-150;
+  }
+
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 3px #14B8A6, 0 0 0 5px #FFFFFF;
+    outline: 2px solid transparent;
+  }
+
+  /* Accessible touch/click target minimum sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .touch-target-compact {
+    min-height: 32px;
+    min-width: 32px;
+  }
+
+  /* Screen-reader only class fallback for strict compliance */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border-width: 0 !important;
+  }
+}
+
+/* =========================================================================
+   High Contrast Mode Overrides (.high-contrast applied to <html> or <body>)
+   WCAG 2.2 AAA Contrast Enhancements (>= 7:1)
+   ========================================================================= */
+.high-contrast {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+.high-contrast body {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+.high-contrast header,
+.high-contrast nav,
+.high-contrast aside,
+.high-contrast main,
+.high-contrast section,
+.high-contrast .bg-surface,
+.high-contrast .bg-white,
+.high-contrast .bg-slate-50,
+.high-contrast .bg-slate-100 {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFF00 !important;
+}
+
+.high-contrast table,
+.high-contrast th,
+.high-contrast td {
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background-color: #000000 !important;
+  color: #FFFF00 !important;
+  border: 2px solid #FFFF00 !important;
+}
+
+.high-contrast input::placeholder,
+.high-contrast textarea::placeholder {
+  color: #E2E8F0 !important;
+}
+
+.high-contrast a {
+  color: #38BDF8 !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast button {
+  border: 2px solid #FFFF00 !important;
+}
+
+.high-contrast .focus-ring:focus-visible {
+  box-shadow: 0 0 0 4px #FFFF00, 0 0 0 6px #000000 !important;
+  outline: 3px solid #FFFF00 !important;
+}
+
+.high-contrast .text-secondary-400,
+.high-contrast .text-secondary-500,
+.high-contrast .text-slate-500,
+.high-contrast .text-gray-500 {
+  color: #E2E8F0 !important;
+}

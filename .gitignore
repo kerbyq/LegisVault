@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+legisvault-frontend/node_modules/
+legisvault-api/vendor/
+
+# Production Builds
+legisvault-frontend/dist/
+legisvault-frontend/.vite/
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+legisvault-api/.env
+legisvault-frontend/.env
+
+# Logs & OS Artifacts
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE / Editor & Obsidian Vault
+.vscode/
+.idea/
+Legisvault/
