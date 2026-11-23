@@ -27,6 +27,7 @@
 | [`LegisVault_System_Design_Specification.md`](./LegisVault_System_Design_Specification.md) | Markdown (PDF-ready) | Full 3-Tier Architecture, RBAC Feature Matrix, Hearing Calendar & Workflow Specs, Inclusive Design System, ER Schema, & API Reference |
 | [`LegisVault_Laws_of_UX_Case_Study.pdf`](./LegisVault_Laws_of_UX_Case_Study.pdf) | PDF (13 Pages) | Updated Laws of UX Evaluation with Annotated Live Screenshots (7 Unknowingly Applied Laws + 7 Before vs. After Redesigns) |
 | [`LegisVault_Laws_of_UX_Case_Study.md`](./LegisVault_Laws_of_UX_Case_Study.md) | Markdown | Editable source for the Laws of UX Case Study (renders embedded visual diagrams in [`ux_case_study_assets/`](./ux_case_study_assets/)) |
+| [`LegisVault_System_Creation_Prompts_Documentation.md`](./LegisVault_System_Creation_Prompts_Documentation.md) | Markdown | Detailed engineering log of the system creation prompts used to scaffold, build, upgrade, and debug LegisVault |
 | [`LegisVault_Accessibility_Audit_UX_Case_Study_Deck.pptx`](./LegisVault_Accessibility_Audit_UX_Case_Study_Deck.pptx) | PowerPoint (10 Slides) | Capstone Presentation Deck summarizing WCAG 2.2 audit findings, POUR breakdowns, and LegisVault inclusive design |
 
 ---
