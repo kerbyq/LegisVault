@@ -37,7 +37,11 @@ export const MainLayout = () => {
 
         {/* 3. Main Body Column */}
         <div className="flex flex-1 flex-col overflow-y-auto min-w-0">
-          <Header onMobileMenuClick={() => setIsMobileMenuOpen(true)} />
+          <Header
+            onMobileMenuClick={() => setIsMobileMenuOpen(true)}
+            onDesktopToggle={() => setIsSidebarCollapsed((prev) => !prev)}
+            isSidebarCollapsed={isSidebarCollapsed}
+          />
 
           {/* 4. Main Content Landmark */}
           <main

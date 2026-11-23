@@ -89,16 +89,30 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       return userData;
     } catch (err) {
-      // In development / demo mode when backend server is offline, provide helpful fallback
-      if (err.code === 'ERR_NETWORK' || !err.response) {
+      // In development / demo mode when Laravel backend (localhost:8000) is offline,
+      // Vite's /api proxy returns HTTP 500/502/503/504 or ERR_NETWORK. Fall back cleanly:
+      const status = err.response?.status;
+      if (err.code === 'ERR_NETWORK' || !err.response || status >= 500 || status === 404) {
         console.warn('API server unreachable, initiating offline demo session.');
+        const lower = email.toLowerCase();
         let fallbackRole = 'admin';
-        if (email.includes('uploader')) fallbackRole = 'uploader';
-        if (email.includes('viewer')) fallbackRole = 'viewer';
+        let displayName = 'Maria Santos';
+        if (lower.includes('uploader') || lower.includes('clerk') || lower.includes('encoder')) {
+          fallbackRole = 'uploader';
+          displayName = 'Ana Cruz (Records Officer)';
+        } else if (lower.includes('viewer') || lower.includes('councilor') || lower.includes('guest')) {
+          fallbackRole = 'viewer';
+          displayName = 'Hon. Jose Reyes';
+        } else if (lower && !lower.startsWith('admin@')) {
+          displayName = email
+            .split('@')[0]
+            .replace(/[._-]/g, ' ')
+            .replace(/\b\w/g, (c) => c.toUpperCase());
+        }
 
         const mockUser = {
           id: 1,
-          name: email.split('@')[0].replace('.', ' ').toUpperCase() || 'Admin User',
+          name: displayName,
           email,
           role: fallbackRole,
           is_active: true,

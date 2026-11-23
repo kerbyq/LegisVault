@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuditLogController;
 use App\Http\Controllers\Api\CommitteeController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\HearingController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\UserController;
@@ -81,6 +82,21 @@ Route::middleware(['auth:sanctum', 'audit'])->group(function () {
         Route::put('/committees/{id}', [CommitteeController::class, 'update'])->name('committees.update');
         Route::patch('/committees/{id}', [CommitteeController::class, 'update'])->name('committees.patch');
         Route::delete('/committees/{id}', [CommitteeController::class, 'destroy'])->name('committees.destroy');
+    });
+
+    // =====================================================================
+    // 4.5. Legislative Hearing & Session Calendar Routes
+    // =====================================================================
+    Route::get('/hearings', [HearingController::class, 'index'])->name('hearings.index');
+
+    Route::middleware('role:admin,uploader')->group(function () {
+        Route::post('/hearings', [HearingController::class, 'store'])->name('hearings.store');
+        Route::put('/hearings/{id}', [HearingController::class, 'update'])->name('hearings.update');
+        Route::patch('/hearings/{id}', [HearingController::class, 'update'])->name('hearings.patch');
+    });
+
+    Route::middleware('role:admin')->group(function () {
+        Route::delete('/hearings/{id}', [HearingController::class, 'destroy'])->name('hearings.destroy');
     });
 
     // =====================================================================

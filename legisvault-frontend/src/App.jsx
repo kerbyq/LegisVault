@@ -10,6 +10,7 @@ import MainLayout from './components/layout/MainLayout';
 import Dashboard from './pages/Dashboard';
 import DocumentRepository from './pages/DocumentRepository';
 import OrdinanceDetail from './pages/OrdinanceDetail';
+import CalendarPage from './pages/CalendarPage';
 import SearchPage from './pages/SearchPage';
 import UploadDocument from './pages/UploadDocument';
 import AuditLogs from './pages/AuditLogs';
@@ -20,7 +21,7 @@ import NotFound from './pages/NotFound';
 
 /**
  * Root Application Router & Context Tree
- * Integrates AuthProvider, ThemeProvider, and WCAG 2.2 compliant route hierarchies.
+ * Integrates AuthProvider, ThemeProvider, Hearing Calendar, and WCAG 2.2 route hierarchies.
  */
 export const App = () => {
   return (
@@ -42,12 +43,15 @@ export const App = () => {
                 </ProtectedRoute>
               }
             >
-              {/* Dashboard */}
+              {/* Secretariat Portal Dashboard */}
               <Route path="/dashboard" element={<Dashboard />} />
 
               {/* Document Repository & Details */}
               <Route path="/documents" element={<DocumentRepository />} />
               <Route path="/documents/:id" element={<OrdinanceDetail />} />
+
+              {/* Legislative Hearing & Session Calendar */}
+              <Route path="/calendar" element={<CalendarPage />} />
 
               {/* Advanced Search */}
               <Route path="/search" element={<SearchPage />} />

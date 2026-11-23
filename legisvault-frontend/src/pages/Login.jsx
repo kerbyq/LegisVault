@@ -66,8 +66,8 @@ export const Login = () => {
     }
   };
 
-  // Demo autofill shortcut
-  const handleQuickFill = (demoRole) => {
+  // Demo autofill + instant one-click login shortcut
+  const handleQuickFill = async (demoRole) => {
     const creds = {
       admin: { email: 'admin@naga.gov.ph', pass: 'password' },
       uploader: { email: 'uploader@naga.gov.ph', pass: 'password' },
@@ -78,7 +78,16 @@ export const Login = () => {
       setEmail(c.email);
       setPassword(c.pass);
       setError('');
-      announce(`Pre-filled credentials for ${demoRole} account.`, 'polite');
+      setIsLoading(true);
+      try {
+        await login(c.email, c.pass);
+        announce(`Signed in with ${demoRole} demonstration account. Redirecting...`, 'polite');
+        navigate(from, { replace: true });
+      } catch {
+        announce(`Pre-filled credentials for ${demoRole} account.`, 'polite');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 

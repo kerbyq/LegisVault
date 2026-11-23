@@ -7,12 +7,14 @@ import AccessibleButton from '../components/common/AccessibleButton';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import {
   DocumentTextIcon,
-  ClockIcon,
-  CheckBadgeIcon,
+  CalendarDaysIcon,
   UsersIcon,
-  ArrowTrendingUpIcon,
-  ArrowUpTrayIcon,
-  MagnifyingGlassIcon,
+  ClipboardDocumentCheckIcon,
+  PlayIcon,
+  MapPinIcon,
+  ClockIcon,
+  ArrowRightIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline';
 import {
   Chart as ChartJS,
@@ -26,25 +28,59 @@ import {
 } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 
-// Register ChartJS modules
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
+
+const UPCOMING_HEARINGS = [
+  {
+    id: 1,
+    code: 'SP-2026-14RS',
+    title: '14th Regular Council Session',
+    dateLabel: 'NOV 24',
+    time: '09:00 AM',
+    venue: 'SP Session Hall',
+    committee: 'Plenary Council',
+    status: 'In Session',
+  },
+  {
+    id: 2,
+    code: 'HRG-2026-042',
+    title: 'Public Hearing: Ord. No. 2026-089 (Digital Archiving)',
+    dateLabel: 'NOV 24',
+    time: '01:30 PM',
+    venue: 'Committee Room A',
+    committee: 'Laws, Rules & Ordinances',
+    status: 'Today',
+  },
+  {
+    id: 3,
+    code: 'HRG-2026-043',
+    title: 'Committee Hearing: Traffic & Active Mobility Code',
+    dateLabel: 'NOV 26',
+    time: '10:00 AM',
+    venue: 'Committee Room B',
+    committee: 'Infrastructure & Public Works',
+    status: 'Scheduled',
+  },
+  {
+    id: 4,
+    code: 'HRG-2026-044',
+    title: 'FY 2026 Typhoon Resilience Supplemental Budget',
+    dateLabel: 'NOV 27',
+    time: '09:30 AM',
+    venue: 'Naga City People\'s Hall',
+    committee: 'Appropriations',
+    status: 'Scheduled',
+  },
+];
 
 /**
- * LegisVault Executive Legislative Dashboard
- * Meets WCAG 2.2 Level AA: provides structured KPI metrics,
- * accessible fallback data tables for canvas charts (WCAG 1.1.1),
- * live reading updates, and quick navigation shortcuts.
+ * LegisVault Secretariat Operations Portal
+ * Upgraded executive legislative portal layout featuring an Active Session Banner,
+ * 4 crisp KPI cards, 3-column analytical charts (with WCAG 1.1.1 accessible table),
+ * upcoming Hearing Calendar docket preview, and recent legislative activity.
  */
 export const Dashboard = () => {
-  const { user, isUploader } = useAuth();
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [recentDocuments, setRecentDocuments] = useState([]);
@@ -65,12 +101,12 @@ export const Dashboard = () => {
           if (statsRes.status === 'fulfilled' && statsRes.value?.data) {
             setStats(statsRes.value.data);
           } else {
-            // High-fidelity fallback metrics
             setStats({
               total_documents: 1420,
               pending_readings: 38,
               approved_this_month: 24,
               active_users: 16,
+              scheduled_hearings: 6,
               documents_by_type: {
                 ordinance: 680,
                 resolution: 590,
@@ -80,38 +116,38 @@ export const Dashboard = () => {
               documents_by_stage: {
                 draft_received: 14,
                 calendared: 24,
-                first_reading: 38,
-                second_reading: 19,
-                third_reading_approval: 1325,
+                first_reading: 15,
+                second_reading: 14,
+                third_reading_approval: 1353,
               },
             });
           }
 
           if (docsRes.status === 'fulfilled' && docsRes.value?.data) {
             const raw = docsRes.value.data.data || docsRes.value.data;
-            setRecentDocuments(Array.isArray(raw) ? raw.slice(0, 5) : []);
+            setRecentDocuments(Array.isArray(raw) ? raw.slice(0, 4) : []);
           } else {
             setRecentDocuments([
               {
-                id: 101,
+                id: 1,
                 ordinance_number: 'Ord. No. 2026-089',
-                title: 'An Ordinance Mandating Digital Archiving of All Legislative Measures in Naga City',
+                title: 'An Ordinance Mandating Digital Archiving and Accessibility Compliance in Naga City',
                 document_type: 'ordinance',
                 reading_status: 'second_reading',
                 author: 'Hon. Ma. Corazon San Jose',
                 created_at: '2026-11-18T09:30:00Z',
               },
               {
-                id: 102,
+                id: 2,
                 ordinance_number: 'Res. No. 2026-312',
-                title: 'A Resolution Commending the Sangguniang Panlungsod Secretariat for WCAG 2.2 Compliance',
+                title: 'Resolution Commending the Sangguniang Panlungsod Secretariat for WCAG 2.2 Compliance',
                 document_type: 'resolution',
                 reading_status: 'third_reading_approval',
                 author: 'Hon. Juan Miguel Perez',
                 created_at: '2026-11-17T14:15:00Z',
               },
               {
-                id: 103,
+                id: 3,
                 ordinance_number: 'Ord. No. 2026-088',
                 title: 'Comprehensive Traffic Management and Pedestrian Safety Code of Naga City',
                 document_type: 'ordinance',
@@ -120,22 +156,13 @@ export const Dashboard = () => {
                 created_at: '2026-11-15T11:00:00Z',
               },
               {
-                id: 104,
-                ordinance_number: 'Ord. No. 2026-087',
-                title: 'Youth Development and Computer Literacy Enhancement Assistance Ordinance',
+                id: 4,
+                ordinance_number: 'Ord. No. 2026-090',
+                title: 'Supplemental FY 2026 Typhoon Resilience & Archival Continuity Appropriation',
                 document_type: 'ordinance',
                 reading_status: 'calendared',
-                author: 'Hon. Angela Cristobal',
-                created_at: '2026-11-12T16:45:00Z',
-              },
-              {
-                id: 105,
-                ordinance_number: 'Res. No. 2026-311',
-                title: 'Draft Proposal on Green Energy Transition for City Hall Facilities',
-                document_type: 'resolution',
-                reading_status: 'draft_received',
-                author: 'Hon. Roberto Del Rosario',
-                created_at: '2026-11-10T10:00:00Z',
+                author: 'Hon. Juan Miguel Perez',
+                created_at: '2026-11-14T16:45:00Z',
               },
             ]);
           }
@@ -153,327 +180,377 @@ export const Dashboard = () => {
     };
   }, []);
 
-  // Bar chart dataset configuration
-  const typeChartData = {
-    labels: ['Ordinances', 'Resolutions', 'Motions', 'Proclamations'],
-    datasets: [
-      {
-        label: 'Total Enacted Documents',
-        data: [
-          stats?.documents_by_type?.ordinance || 680,
-          stats?.documents_by_type?.resolution || 590,
-          stats?.documents_by_type?.motion || 110,
-          stats?.documents_by_type?.proclamation || 40,
-        ],
-        backgroundColor: ['#0F4C75', '#3282B8', '#10B981', '#F59E0B'],
-        borderColor: ['#0A314B', '#0F4C75', '#065F46', '#92400E'],
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  // Doughnut chart dataset configuration
+  // Chart 1: Measure Status Distribution (Doughnut)
   const stageChartData = {
-    labels: [
-      'Draft Received',
-      'Calendared',
-      '1st Reading',
-      '2nd Reading',
-      'Approved (3rd Reading)',
-    ],
+    labels: ['Draft', 'Calendared', '1st Read', '2nd Read', 'Enacted'],
     datasets: [
       {
-        label: 'Documents in Stage',
+        label: 'Measures',
         data: [
           stats?.documents_by_stage?.draft_received || 14,
           stats?.documents_by_stage?.calendared || 24,
-          stats?.documents_by_stage?.first_reading || 38,
-          stats?.documents_by_stage?.second_reading || 19,
-          stats?.documents_by_stage?.third_reading_approval || 1325,
+          stats?.documents_by_stage?.first_reading || 15,
+          stats?.documents_by_stage?.second_reading || 14,
+          stats?.documents_by_stage?.third_reading_approval || 1353,
         ],
-        backgroundColor: ['#94A3B8', '#0284C7', '#D97706', '#EA580C', '#059669'],
+        backgroundColor: ['#94A3B8', '#0284C7', '#F59E0B', '#EA580C', '#0B3568'],
         borderColor: '#FFFFFF',
         borderWidth: 2,
       },
     ],
   };
 
-  const chartOptions = {
+  // Chart 2: Ready for Floor Action (Vertical Bar)
+  const floorChartData = {
+    labels: ['Calendared', '1st Read', '2nd Read', '3rd Read'],
+    datasets: [
+      {
+        label: 'Measures Ready',
+        data: [24, 15, 14, 9],
+        backgroundColor: '#0B3568',
+        borderRadius: 4,
+      },
+    ],
+  };
+
+  // Chart 3: Top Committees Workload (Horizontal Bar)
+  const committeeChartData = {
+    labels: ['Laws & Rules', 'Appropriations', 'Infrastructure', 'Health'],
+    datasets: [
+      {
+        label: 'Active',
+        data: [14, 11, 9, 7],
+        backgroundColor: '#0B3568',
+        borderRadius: 3,
+      },
+      {
+        label: 'Pending',
+        data: [4, 5, 3, 2],
+        backgroundColor: '#F59E0B',
+        borderRadius: 3,
+      },
+    ],
+  };
+
+  const compactLegendOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'bottom',
         labels: {
-          color: '#1B262C',
-          font: { family: 'Inter', weight: 600, size: 12 },
-          boxWidth: 14,
-          padding: 16,
+          color: '#334155',
+          font: { family: 'Inter', weight: 600, size: 11 },
+          boxWidth: 10,
+          padding: 10,
         },
       },
+    },
+  };
+
+  const horizontalBarOptions = {
+    ...compactLegendOptions,
+    indexAxis: 'y',
+    scales: {
+      x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
+      y: { grid: { display: false }, ticks: { color: '#334155', font: { size: 10, weight: 600 } } },
+    },
+  };
+
+  const verticalBarOptions = {
+    ...compactLegendOptions,
+    plugins: { ...compactLegendOptions.plugins, legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
+      x: { grid: { display: false }, ticks: { color: '#334155', font: { size: 10, weight: 600 } } },
     },
   };
 
   if (loading) {
     return (
       <div className="py-16 text-center" role="status">
-        <LoadingSpinner size="lg" label="Loading dashboard metrics..." showText />
+        <LoadingSpinner size="lg" label="Loading Secretariat Portal metrics..." showText />
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Page Title & Welcome Banner */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-slate-200">
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-secondary-500 tracking-tight">
-            Legislative Operations Dashboard
-          </h2>
-          <p className="mt-1 text-sm text-secondary-400">
-            Welcome back, <strong className="text-secondary-500">{user?.name || user?.email}</strong>. Overview of Naga City legislative measures and workflows.
-          </p>
-        </div>
-
-        {/* Quick Action Buttons */}
-        <div className="flex items-center gap-3">
-          <Link to="/search">
-            <AccessibleButton
-              variant="outline"
-              size="md"
-              leftIcon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              ariaLabel="Search legislative archive"
-            >
-              Search Archive
-            </AccessibleButton>
-          </Link>
-
-          {isUploader && (
-            <Link to="/upload">
-              <AccessibleButton
-                variant="primary"
-                size="md"
-                leftIcon={<ArrowUpTrayIcon className="h-5 w-5" />}
-                ariaLabel="Upload new legislative document"
-              >
-                Upload Document
-              </AccessibleButton>
-            </Link>
-          )}
-        </div>
+    <div className="space-y-6">
+      {/* Portal Header */}
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-secondary-500 tracking-tight">
+          Secretariat Operations Portal
+        </h1>
+        <p className="mt-1 text-sm text-slate-500">
+          Control legislative sessions, track committee hearings, and oversee Naga City digital records — signed in as{' '}
+          <strong className="text-secondary-500">{user?.name || 'Maria Santos'}</strong>.
+        </p>
       </div>
 
-      {/* KPI Stat Cards Grid */}
+      {/* Hero Active Session Banner Card */}
+      <section
+        aria-label="Active Sangguniang Panlungsod Session"
+        className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+      >
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 text-sm font-extrabold text-secondary-500">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-100" aria-hidden="true" />
+              Session Active
+            </span>
+            <span className="rounded-full bg-sky-50 border border-sky-200 px-2.5 py-0.5 text-xs font-bold text-[#0B3568]">
+              SP-2026-14RS
+            </span>
+          </div>
+
+          <p className="text-base font-bold text-secondary-500">
+            14th Regular Session — Sangguniang Panlungsod of Naga City
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500">
+            <span className="inline-flex items-center gap-1">
+              <ClockIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
+              Tuesday, November 24, 2026 at 09:00 AM PHT
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <MapPinIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
+              SP Session Hall, Naga City Hall • 4 hearings &amp; 5 agenda measures
+            </span>
+          </div>
+        </div>
+
+        <div className="shrink-0">
+          <Link to="/calendar">
+            <AccessibleButton
+              variant="primary"
+              size="md"
+              leftIcon={<PlayIcon className="h-4 w-4" />}
+              ariaLabel="Open Legislative Hearing Calendar and Session Schedule"
+              className="!bg-[#0B3568] hover:!bg-[#082A54]"
+            >
+              View Hearing Calendar
+            </AccessibleButton>
+          </Link>
+        </div>
+      </section>
+
+      {/* 4 Minimalist Executive KPI Cards */}
       <section aria-label="Key Performance Indicators">
-        <h3 className="sr-only">Key Performance Indicators</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Total Documents */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-secondary-400">Total Enacted Records</p>
-              <p className="mt-2 text-3xl font-extrabold text-secondary-500">
-                {stats?.total_documents?.toLocaleString() || '1,420'}
-              </p>
-              <p className="mt-1 text-xs text-primary font-semibold flex items-center">
-                <ArrowTrendingUpIcon className="h-4 w-4 mr-1 text-accent" aria-hidden="true" />
-                Updated live
-              </p>
+        <h2 className="sr-only">Key Performance Indicators</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold text-slate-600">Measures Ready for Reading</p>
+              <DocumentTextIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
-            <div className="h-12 w-12 rounded-xl bg-primary-50 text-primary flex items-center justify-center" aria-hidden="true">
-              <DocumentTextIcon className="h-7 w-7" />
-            </div>
+            <p className="mt-3 text-3xl font-extrabold text-secondary-500">
+              {stats?.pending_readings || 38}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">15 for 1st, 14 for 2nd, 9 for 3rd</p>
           </div>
 
-          {/* Pending Readings */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-secondary-400">In Active Reading</p>
-              <p className="mt-2 text-3xl font-extrabold text-amber-600">
-                {stats?.pending_readings?.toLocaleString() || '38'}
-              </p>
-              <p className="mt-1 text-xs text-secondary-400 font-medium">1st & 2nd reading stages</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold text-slate-600">Total Enacted Records</p>
+              <ClipboardDocumentCheckIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
-            <div className="h-12 w-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center" aria-hidden="true">
-              <ClockIcon className="h-7 w-7" />
-            </div>
+            <p className="mt-3 text-3xl font-extrabold text-secondary-500">
+              {stats?.total_documents?.toLocaleString() || '1,420'}
+            </p>
+            <p className="mt-1 text-xs text-emerald-700 font-semibold">
+              +{stats?.approved_this_month || 24} approved this month
+            </p>
           </div>
 
-          {/* Approved This Month */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-secondary-400">Approved This Month</p>
-              <p className="mt-2 text-3xl font-extrabold text-emerald-600">
-                {stats?.approved_this_month?.toLocaleString() || '24'}
-              </p>
-              <p className="mt-1 text-xs text-emerald-700 font-semibold">3rd reading passed</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold text-slate-600">Scheduled Hearings</p>
+              <CalendarDaysIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
-            <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center" aria-hidden="true">
-              <CheckBadgeIcon className="h-7 w-7" />
-            </div>
+            <p className="mt-3 text-3xl font-extrabold text-[#0B3568]">
+              {stats?.scheduled_hearings || 6}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">2 hearings today • 4 this week</p>
           </div>
 
-          {/* Active Users */}
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs flex items-center justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-secondary-400">Secretariat Staff</p>
-              <p className="mt-2 text-3xl font-extrabold text-secondary-500">
-                {stats?.active_users?.toLocaleString() || '16'}
-              </p>
-              <p className="mt-1 text-xs text-secondary-400 font-medium">Active authenticated users</p>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold text-slate-600">Active Secretariat Staff</p>
+              <UsersIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
-            <div className="h-12 w-12 rounded-xl bg-slate-100 text-secondary-500 flex items-center justify-center" aria-hidden="true">
-              <UsersIcon className="h-7 w-7" />
-            </div>
+            <p className="mt-3 text-3xl font-extrabold text-secondary-500">
+              {stats?.active_users || 16}
+            </p>
+            <p className="mt-1 text-xs text-slate-500">Admin, Uploader &amp; Viewer roles</p>
           </div>
         </div>
       </section>
 
-      {/* Chart Panels (With WCAG 1.1.1 Accessible Table Alternative) */}
-      <section aria-labelledby="chart-panel-heading" className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <h3 id="chart-panel-heading" className="text-xl font-bold text-secondary-500">
-            Legislative Distributions & Pipeline
-          </h3>
+      {/* 3-Column Analytics Row (With WCAG 1.1.1 Accessible Table Toggle) */}
+      <section aria-labelledby="analytics-heading" className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 id="analytics-heading" className="text-base font-extrabold text-secondary-500 flex items-center gap-2">
+            <ChartBarIcon className="h-5 w-5 text-[#0B3568]" aria-hidden="true" />
+            Legislative Analytics &amp; Committee Performance
+          </h2>
           <AccessibleButton
             variant="ghost"
             size="sm"
             onClick={() => setShowChartTable((prev) => !prev)}
-            ariaLabel={showChartTable ? 'Hide accessible chart data table' : 'Show accessible chart data table'}
+            ariaLabel={showChartTable ? 'Hide accessible chart data table' : 'View chart data as accessible table'}
           >
-            {showChartTable ? 'Hide Accessible Data Table' : 'View as Accessible Table'}
+            {showChartTable ? 'Hide Accessible Table' : 'View as Accessible Table'}
           </AccessibleButton>
         </div>
 
-        {/* Accessible Data Table Alternative for Assistive Tech and High Contrast Users */}
         {showChartTable && (
-          <div className="overflow-x-auto rounded-xl border border-slate-300 bg-white p-4 shadow-xs" tabIndex={0} role="region" aria-label="Tabular chart statistics">
-            <h4 className="font-bold text-secondary-500 mb-2">Legislative Records by Type & Workflow Stage</h4>
-            <table className="min-w-full divide-y divide-slate-200 text-sm">
-              <caption className="sr-only">Detailed breakdown of documents by category and reading pipeline stage</caption>
+          <div className="overflow-x-auto rounded-xl border border-slate-300 bg-white p-4 shadow-xs" tabIndex={0} role="region" aria-label="Accessible Analytics Data Table">
+            <table className="min-w-full divide-y divide-slate-200 text-xs">
+              <caption className="sr-only">Numeric summary of measure status distribution and committee workload</caption>
               <thead className="bg-slate-100 font-bold">
                 <tr>
-                  <th scope="col" className="px-4 py-2 text-left">Document Type</th>
-                  <th scope="col" className="px-4 py-2 text-right">Count</th>
-                  <th scope="col" className="px-4 py-2 text-left">Reading Stage</th>
-                  <th scope="col" className="px-4 py-2 text-right">In Stage</th>
+                  <th scope="col" className="px-3 py-2 text-left">Reading Stage</th>
+                  <th scope="col" className="px-3 py-2 text-right">Measures</th>
+                  <th scope="col" className="px-3 py-2 text-left">Committee</th>
+                  <th scope="col" className="px-3 py-2 text-right">Active / Pending</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                <tr>
-                  <th scope="row" className="px-4 py-2">Ordinances</th>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_type?.ordinance}</td>
-                  <td className="px-4 py-2">Draft Received</td>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_stage?.draft_received}</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="px-4 py-2">Resolutions</th>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_type?.resolution}</td>
-                  <td className="px-4 py-2">Calendared</td>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_stage?.calendared}</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="px-4 py-2">Motions</th>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_type?.motion}</td>
-                  <td className="px-4 py-2">1st Reading</td>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_stage?.first_reading}</td>
-                </tr>
-                <tr>
-                  <th scope="row" className="px-4 py-2">Proclamations</th>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_type?.proclamation}</td>
-                  <td className="px-4 py-2">2nd Reading</td>
-                  <td className="px-4 py-2 text-right font-medium">{stats?.documents_by_stage?.second_reading}</td>
-                </tr>
-                <tr className="bg-slate-50 font-semibold">
-                  <th scope="row" className="px-4 py-2">Total Measures</th>
-                  <td className="px-4 py-2 text-right">{stats?.total_documents}</td>
-                  <td className="px-4 py-2">3rd Reading (Approved)</td>
-                  <td className="px-4 py-2 text-right">{stats?.documents_by_stage?.third_reading_approval}</td>
-                </tr>
+                <tr><th scope="row" className="px-3 py-2 text-left">Draft Received</th><td className="px-3 py-2 text-right">14</td><td className="px-3 py-2">Laws &amp; Rules</td><td className="px-3 py-2 text-right">14 / 4</td></tr>
+                <tr><th scope="row" className="px-3 py-2 text-left">Calendared</th><td className="px-3 py-2 text-right">24</td><td className="px-3 py-2">Appropriations</td><td className="px-3 py-2 text-right">11 / 5</td></tr>
+                <tr><th scope="row" className="px-3 py-2 text-left">1st Reading</th><td className="px-3 py-2 text-right">15</td><td className="px-3 py-2">Infrastructure</td><td className="px-3 py-2 text-right">9 / 3</td></tr>
+                <tr><th scope="row" className="px-3 py-2 text-left">2nd Reading</th><td className="px-3 py-2 text-right">14</td><td className="px-3 py-2">Health &amp; Sanitation</td><td className="px-3 py-2 text-right">7 / 2</td></tr>
               </tbody>
             </table>
           </div>
         )}
 
-        {/* Visual Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-            <h4 className="text-base font-bold text-secondary-500 mb-4">Volume by Document Classification</h4>
-            <div className="h-64">
-              <Bar data={typeChartData} options={chartOptions} aria-label="Bar chart showing document volume by type" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Card 1: Measure Status Distribution */}
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <h3 className="text-sm font-extrabold text-secondary-500">Measure Status Distribution</h3>
+            <p className="text-xs text-slate-500 mb-3">All legislative records by reading stage</p>
+            <div className="h-52">
+              <Doughnut data={stageChartData} options={compactLegendOptions} aria-label="Doughnut chart of measure status distribution" />
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-            <h4 className="text-base font-bold text-secondary-500 mb-4">Workflow Pipeline Status</h4>
-            <div className="h-64">
-              <Doughnut data={stageChartData} options={chartOptions} aria-label="Doughnut chart showing document distribution across reading stages" />
+          {/* Card 2: Ready for Floor Action */}
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <h3 className="text-sm font-extrabold text-secondary-500">Ready for Floor Action</h3>
+            <p className="text-xs text-slate-500 mb-3">Pending measures queued by stage</p>
+            <div className="h-52">
+              <Bar data={floorChartData} options={verticalBarOptions} aria-label="Bar chart of measures ready for floor action" />
+            </div>
+          </div>
+
+          {/* Card 3: Top Committees Performance */}
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <h3 className="text-sm font-extrabold text-secondary-500">Top Committees Performance</h3>
+            <p className="text-xs text-slate-500 mb-3">Active vs. pending measures by committee</p>
+            <div className="h-52">
+              <Bar data={committeeChartData} options={horizontalBarOptions} aria-label="Horizontal bar chart of committee workload" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Recent Legislative Activity Feed */}
-      <section aria-labelledby="recent-activity-heading">
-        <div className="flex items-center justify-between mb-4">
-          <h3 id="recent-activity-heading" className="text-xl font-bold text-secondary-500">
-            Recent Legislative Records
-          </h3>
-          <Link
-            to="/documents"
-            className="text-sm font-bold text-primary hover:text-primary-600 focus-ring rounded p-1"
-          >
-            View Full Registry →
-          </Link>
-        </div>
+      {/* Bottom Split Row: Upcoming Hearings Docket + Recent Legislative Activity */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        {/* Upcoming Hearings & Sessions Preview */}
+        <section
+          aria-labelledby="upcoming-hearings-heading"
+          className="xl:col-span-5 rounded-xl border border-slate-200 bg-white p-5 shadow-xs"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 id="upcoming-hearings-heading" className="text-base font-extrabold text-secondary-500 flex items-center gap-2">
+              <CalendarDaysIcon className="h-5 w-5 text-[#0B3568]" aria-hidden="true" />
+              Upcoming Hearings &amp; Sessions
+            </h2>
+            <Link to="/calendar" className="text-xs font-bold text-[#0B3568] hover:underline focus-ring rounded p-1">
+              Full Calendar →
+            </Link>
+          </div>
 
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
           <ul role="list" className="divide-y divide-slate-100">
-            {recentDocuments.map((doc) => (
-              <li
-                key={doc.id}
-                className="p-4 sm:p-5 hover:bg-slate-50/80 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-              >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-primary text-sm sm:text-base">
-                      {doc.ordinance_number}
-                    </span>
-                    <span className="text-xs uppercase px-2 py-0.5 rounded bg-slate-100 font-semibold text-secondary-400">
-                      {doc.document_type}
-                    </span>
-                    <StatusBadge status={doc.reading_status} size="sm" />
-                  </div>
-                  <h4 className="text-sm sm:text-base font-semibold text-secondary-500 line-clamp-1">
-                    {doc.title}
-                  </h4>
-                  <p className="text-xs text-secondary-400">
-                    Sponsored by <span className="font-medium text-secondary-500">{doc.author}</span>
-                  </p>
+            {UPCOMING_HEARINGS.map((h) => (
+              <li key={h.id} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
+                <div className="w-12 shrink-0 rounded-lg bg-sky-50 border border-sky-200 py-1.5 text-center">
+                  <span className="block text-[10px] font-extrabold text-[#0B3568]">{h.dateLabel}</span>
+                  <span className="block text-[10px] font-semibold text-slate-600">{h.time.replace(' AM', 'a').replace(' PM', 'p')}</span>
                 </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-xs text-secondary-400 whitespace-nowrap">
-                    {new Date(doc.created_at).toLocaleDateString('en-PH', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
-                  </span>
-                  <Link to={`/documents/${doc.id}`}>
-                    <AccessibleButton
-                      variant="outline"
-                      size="sm"
-                      ariaLabel={`View details for ${doc.ordinance_number}`}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold text-[#0B3568]">{h.code}</span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                        h.status === 'In Session'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : h.status === 'Today'
+                          ? 'bg-amber-100 text-amber-900'
+                          : 'bg-slate-100 text-slate-600'
+                      }`}
                     >
-                      View Measure
-                    </AccessibleButton>
-                  </Link>
+                      {h.status}
+                    </span>
+                  </div>
+                  <p className="text-xs font-bold text-secondary-500 truncate mt-0.5">{h.title}</p>
+                  <p className="text-[11px] text-slate-500 truncate">{h.venue} • {h.committee}</p>
                 </div>
               </li>
             ))}
           </ul>
-        </div>
-      </section>
+        </section>
+
+        {/* Recent Legislative Measures */}
+        <section
+          aria-labelledby="recent-activity-heading"
+          className="xl:col-span-7 rounded-xl border border-slate-200 bg-white p-5 shadow-xs"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 id="recent-activity-heading" className="text-base font-extrabold text-secondary-500">
+              Recent Legislative Measures
+            </h2>
+            <Link to="/documents" className="text-xs font-bold text-[#0B3568] hover:underline focus-ring rounded p-1">
+              View Full Registry →
+            </Link>
+          </div>
+
+          <ul role="list" className="divide-y divide-slate-100">
+            {recentDocuments.map((doc) => (
+              <li
+                key={doc.id}
+                className="py-3 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+              >
+                <div className="min-w-0 space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Link
+                      to={`/documents/${doc.id}`}
+                      className="font-extrabold text-[#0B3568] hover:underline text-xs sm:text-sm focus-ring rounded"
+                    >
+                      {doc.ordinance_number}
+                    </Link>
+                    <StatusBadge status={doc.reading_status} size="sm" />
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-secondary-500 line-clamp-1">
+                    {doc.title}
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    Sponsored by <span className="font-semibold text-slate-700">{doc.author}</span>
+                  </p>
+                </div>
+
+                <Link to={`/documents/${doc.id}`} className="shrink-0">
+                  <span className="inline-flex min-h-[36px] items-center gap-1 rounded-lg border border-slate-200 px-3 py-1 text-xs font-bold text-slate-700 hover:bg-slate-50 focus-ring">
+                    Inspect
+                    <ArrowRightIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
     </div>
   );
 };

@@ -27,15 +27,15 @@
 - **Primary Value Proposition:** LegisVault unifies automated Tesseract OCR digitization, sub-2-minute multi-criteria legislative retrieval, immutable 5-stage workflow tracking, tripartite Role-Based Access Control (**Admin**, **Uploader**, **Viewer**), polymorphic audit logging, and native **WCAG 2.2 Level AA / RA 7277** inclusive design in a single cohesive platform.
 
 ### 1.2 Target User Cohorts & Main User Flows
-1. **Role-Based Authentication & Workspace Onboarding (`Login.jsx` → `Dashboard.jsx`):** Sanctum bearer-token authentication routes Admins, Uploaders, and Viewers to role-scoped navigation rails and live legislative KPI cards.
-2. **Multi-Criteria Legislative Search & Retrieval (`SearchPage.jsx` & `DocumentRepository.jsx`):** Councilors and researchers filter 1,400+ enactments concurrently by keyword/OCR text, ordinance number, sponsoring committee, enacted year, document type, and reading stage in under 2 minutes.
-3. **Document Digitization & Metadata Indexing (`UploadDocument.jsx`):** Records clerks upload PDF/DOCX enactments, capture 7 mandatory bibliographic metadata fields, and trigger automated OCR text extraction.
-4. **5-Stage Legislative Reading Workflow Tracking (`OrdinanceDetail.jsx` + `WorkflowTracker.jsx`):** Authorized clerks advance legislative measures sequentially across the 5 statutory stages with session dates and committee notes.
-5. **Administrative Governance & Forensic Auditing (`UserManagement.jsx` & `AuditLogs.jsx`):** Secretariat administrators manage user roles, committees, analytical reports, and inspect JSON-diffed audit trails.
+1. **Role-Based Onboarding & Secretariat Portal (`Login.jsx` → `Dashboard.jsx`):** Sanctum bearer-token authentication routes Admins, Uploaders, and Viewers to a grouped royal-navy executive portal featuring an **Active Session Banner**, `Ctrl+K` global command search, 4 KPI cards, and a 3-column analytics row.
+2. **Legislative Hearing & Session Calendar (`CalendarPage.jsx` — `/calendar`):** Interactive monthly calendar grid and **Hearing Tracking Docket** linking regular sessions, committee hearings, and public consultations directly to active ordinances and reading stages.
+3. **Multi-Criteria Legislative Search & Retrieval (`SearchPage.jsx` & `DocumentRepository.jsx`):** Councilors and researchers filter 1,400+ enactments concurrently by keyword/OCR text, ordinance number, sponsoring committee, enacted year, document type, and reading stage in under 2 minutes.
+4. **Document Digitization & Metadata Indexing (`UploadDocument.jsx`):** Records clerks upload PDF/DOCX enactments, capture 7 mandatory bibliographic metadata fields, and trigger automated OCR text extraction.
+5. **5-Stage Legislative Reading Workflow Tracking & Forensic Auditing (`OrdinanceDetail.jsx`, `WorkflowTracker.jsx`, `AuditLogs.jsx`):** Authorized clerks advance legislative measures sequentially across the 5 statutory stages with session notes and JSON-diffed audit trails.
 
 ### 1.3 Key Interfaces Evaluated (Actual Live System Screenshots)
 ![LegisVault Key Interfaces Overview](ux_case_study_assets/fig1_key_interfaces.png)
-*Figure 1: Actual live screenshots captured from the running LegisVault React + Tailwind CSS application across its four main screens: (A) Legislative Operations Dashboard (`/dashboard`), (B) Master Legislative Repository (`/documents`), (C) Advanced Legislative Search (`/search`), and (D) Ordinance Detail & 5-Stage Reading Timeline (`/documents/1`).*
+*Figure 1: Actual live screenshots captured from the upgraded LegisVault React + Tailwind CSS application across its four main screens: (A) Secretariat Operations Portal (`/dashboard`), (B) Legislative Hearing & Session Calendar (`/calendar`), (C) Master Legislative Repository (`/documents`), and (D) Ordinance Detail & 5-Stage Reading Timeline (`/documents/1`).*
 
 ---
 
@@ -81,11 +81,11 @@ A retrospective cognitive-ergonomics audit of `legisvault-frontend` revealed **7
 - **UX Impact Analysis:** Consistent visual grammar builds immediate cross-screen recognition: once learned on the Dashboard, status badges and action buttons are decoded effortlessly everywhere—including by staff with color-vision deficiency.
 
 ### 2.7 Aesthetic-Usability Effect *(Kurosu & Kashimura, 1995)*
-- **Interface Evidence:** `tailwind.config.js` and `index.css` enforce a cohesive institutional visual system: Deep Civic Navy (`#0F4C75`), Slate Charcoal (`#1B262C`), high-luminance Surface (`#F8FAFC`), Inter typography, crisp card borders, balanced whitespace, and 3px teal focus indicators.
+- **Interface Evidence:** `Sidebar.jsx`, `Header.jsx`, `Dashboard.jsx`, and `CalendarPage.jsx` enforce a cohesive civic executive visual system: Deep Civic Royal Navy (`#0B3568`), crisp white card surfaces, high-luminance Surface (`#F8FAFC`), Inter typography, balanced whitespace, and 3px teal keyboard focus indicators.
 - **UX Impact Analysis:** Visual refinement elevates perceived reliability and institutional authority, fostering trust among senior Sangguniang Panlungsod members transitioning from traditional paper ledgers.
 
 ![Annotated Live LegisVault Screens — Laws 2.5 to 2.7](ux_case_study_assets/fig3_implicit_laws_part2.png)
-*Figure 3: Annotated live system screenshots locating Law of Proximity [2.5], Law of Similarity [2.6], and Aesthetic-Usability Effect [2.7] directly on `/documents`, `/upload`, and `/login`.*
+*Figure 3: Annotated live system screenshots locating Law of Proximity [2.5], Law of Similarity [2.6], and Aesthetic-Usability Effect [2.7] directly on `/documents`, `/upload`, and `/calendar`.*
 
 ---
 

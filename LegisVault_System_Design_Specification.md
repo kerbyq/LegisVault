@@ -630,6 +630,22 @@ Users across all three roles can generate filtered tabular reports through `/api
 
 ---
 
+## 3.8 Legislative Hearing & Session Calendar & Secretariat Portal Layout
+
+### 3.8.1 Executive Secretariat Portal Architecture (`/dashboard`)
+Building upon comparative ergonomic analysis of modern Philippine legislative portals while enforcing strict WCAG 2.2 Level AA compliance, the LegisVault presentation shell (`Sidebar.jsx`, `Header.jsx`, `Dashboard.jsx`) incorporates:
+- **Deep Civic Royal-Navy Grouped Navigation (`#0B3568`):** Organizes RBAC-pruned modules into three clear semantic sections (*Dashboard*, *Legislative*, and *Governance & Records*) with a bottom-pinned user credential bar and live hearing count badge.
+- **Global Command Header (`Ctrl+K`):** Provides keyboard-first global search across ordinances and hearings, quick shortcuts (`+ Upload Measure`, `Hearings`), a WCAG AAA **High Contrast Mode** toggle, and an interactive hearing alerts popover.
+- **Active Session Hero Banner & 3-Column Analytics:** Surfaces live plenary session metadata (`SP-2026-14RS`, date/time, hall location, agenda count) paired with a single primary CTA (`View Hearing Calendar`), four minimalist executive KPI cards, and a three-chart analytical row (*Measure Status Distribution*, *Ready for Floor Action*, and *Top Committees Performance*) backed by a WCAG 1.1.1 accessible data-table toggle.
+
+### 3.8.2 Legislative Hearing & Session Calendar (`/calendar`)
+To unify statutory workflow tracking with real-world parliamentary scheduling, LegisVault provides a dedicated **Legislative Hearing & Session Calendar** (`CalendarPage.jsx` + `HearingController.php` + `hearings` MySQL table):
+- **Interactive Monthly Calendar Grid:** Displays Regular Sessions, Public Hearings, and Committee Hearings with color-and-dot visual markers, per-day hearing counts, keyboard-operable date selection, and category filter pills.
+- **Hearing Tracking Docket:** Links each scheduled hearing (`HRG-2026-XXX` / `SP-2026-14RS`) directly to its corresponding legislative measure (`documents.id`), displaying presiding councilor, venue, sponsoring committee, linked reading stage `StatusBadge`, and live tracking status (`Scheduled`, `In Session`, `Completed`, `Deferred`).
+- **Role-Guarded Hearing Scheduling:** Administrators and Uploaders can schedule new hearings via an accessible modal (`POST /api/hearings`) and advance hearing tracking statuses (`PATCH /api/hearings/{id}`), while Viewers retain read-only calendar visibility (`GET /api/hearings`).
+
+---
+
 # 4. Comprehensive Feature-Role Matrix
 
 The following matrix delineates the exact operational capabilities, access privileges, and functional restrictions across all three system roles (**Administrator**, **Uploader**, and **Viewer**) within LegisVault. Privileges are enforced at both the Presentation Tier (UI view rendering and component suppression) and the Application Tier (middleware gatekeepers and controller authorization checks).
@@ -686,6 +702,10 @@ The following matrix delineates the exact operational capabilities, access privi
 | | View Classification Donut Charts | **Full Access** | **Full Access** | **Full Access** | Document type distribution breakdown. |
 | | Export Filtered Repository to CSV | **Full Access** | **Full Access** | **Full Access** | Streams CSV file generated from active query scope. |
 | | Generate Printable Summary Reports | **Full Access** | **Full Access** | **Full Access** | Formatted summary sheets with official letterhead. |
+| **Hearing Calendar** | View Monthly Hearing & Session Calendar | **Full Access** | **Full Access** | **Read Only** | Open to all authenticated roles (`GET /api/hearings`). |
+| | Schedule New Committee / Public Hearing | **Full Access** | **Full Access** | *No Access* | Gated via `RoleMiddleware('admin,uploader')` (`POST /api/hearings`). |
+| | Update Hearing Tracking Status (`In Session`/`Completed`) | **Full Access** | **Full Access** | *No Access* | Gated via `RoleMiddleware('admin,uploader')` (`PATCH /api/hearings/{id}`). |
+| | Cancel / Soft-Delete Scheduled Hearing | **Full Access** | *No Access* | *No Access* | Strictly restricted to `admin` (`DELETE /api/hearings/{id}`). |
 | **Forensic Audit Logs** | View Forensic Activity Ledger | **Full Access** | *No Access* | *No Access* | Gated via `RoleMiddleware('admin')`; shows all mutations. |
 | | Inspect Individual Audit Entry Diffs | **Full Access** | *No Access* | *No Access* | Gated via `RoleMiddleware('admin')`; displays JSON diffs. |
 | | Filter Logs by User, Action, or Date | **Full Access** | *No Access* | *No Access* | Gated via `RoleMiddleware('admin')`. |
