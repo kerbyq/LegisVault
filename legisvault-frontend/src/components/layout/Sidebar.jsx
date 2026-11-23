@@ -59,7 +59,7 @@ export const Sidebar = ({
           roles: ['admin', 'uploader', 'viewer'],
         },
         {
-          name: 'Hearing Calendar',
+          name: 'Session Calendar',
           href: '/calendar',
           icon: CalendarDaysIcon,
           roles: ['admin', 'uploader', 'viewer'],
@@ -72,7 +72,7 @@ export const Sidebar = ({
           roles: ['admin', 'uploader', 'viewer'],
         },
         {
-          name: 'Upload Measure',
+          name: 'Upload Document',
           href: '/upload',
           icon: CloudArrowUpIcon,
           roles: ['admin', 'uploader'],

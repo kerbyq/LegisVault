@@ -21,10 +21,10 @@ import {
   FunnelIcon,
 } from '@heroicons/react/24/outline';
 
-const INITIAL_HEARINGS = [
+const INITIAL_SESSIONS = [
   {
     id: 1,
-    hearing_code: 'SP-2026-14RS',
+    session_code: 'SP-2026-14RS',
     title: '14th Regular Session — Sangguniang Panlungsod',
     type: 'regular_session',
     date: '2026-11-24',
@@ -32,85 +32,85 @@ const INITIAL_HEARINGS = [
     venue: 'SP Session Hall, Naga City Hall',
     committee: 'Plenary Council (All Committees)',
     presiding_officer: 'Hon. Cecilia B. Veluz-De Asis',
-    linked_measure: { id: 1, code: 'Ord. No. 2026-089', stage: 'second_reading' },
+    linked_document: { id: 1, code: 'Ord. No. 2026-089', stage: 'second_reading' },
     status: 'in_session',
     agenda_count: 5,
     notes: 'Order of Business includes 2nd Reading interpellation of the Digital Archiving Ordinance and Committee Reports.',
   },
   {
     id: 2,
-    hearing_code: 'HRG-2026-042',
-    title: 'Public Hearing: Digital Archiving & Accessibility Mandate',
-    type: 'public_hearing',
+    session_code: 'SES-2026-042',
+    title: 'Committee Session: Digital Archiving & Accessibility Mandate',
+    type: 'committee_session',
     date: '2026-11-24',
     time: '01:30 PM',
-    venue: 'Committee Room A, Naga City Hall',
+    venue: 'Session Room A, Naga City Hall',
     committee: 'Committee on Laws, Rules & Ordinances',
     presiding_officer: 'Hon. Ma. Corazon San Jose',
-    linked_measure: { id: 1, code: 'Ord. No. 2026-089', stage: 'second_reading' },
+    linked_document: { id: 1, code: 'Ord. No. 2026-089', stage: 'second_reading' },
     status: 'scheduled',
     agenda_count: 3,
-    notes: 'Stakeholder consultation with Naga City PWD Federation and City IT Office on WCAG 2.2 AA compliance.',
+    notes: 'Deliberation with Naga City PWD Federation and City IT Office on WCAG 2.2 AA compliance.',
   },
   {
     id: 3,
-    hearing_code: 'HRG-2026-043',
-    title: 'Committee Hearing: Comprehensive Traffic & Active Mobility Code',
-    type: 'committee_hearing',
+    session_code: 'SES-2026-043',
+    title: 'Committee Session: Comprehensive Traffic & Active Mobility Code',
+    type: 'committee_session',
     date: '2026-11-26',
     time: '10:00 AM',
-    venue: 'Committee Room B, SP Wing',
+    venue: 'Session Room B, SP Wing',
     committee: 'Committee on Infrastructure & Public Works',
     presiding_officer: 'Hon. Salvador Mendoza',
-    linked_measure: { id: 3, code: 'Ord. No. 2026-088', stage: 'first_reading' },
+    linked_document: { id: 3, code: 'Ord. No. 2026-088', stage: 'first_reading' },
     status: 'scheduled',
     agenda_count: 4,
-    notes: 'Technical briefing with Naga City Public Safety Office on pedestrian lane expansions.',
+    notes: 'Technical session with Naga City Public Safety Office on pedestrian lane expansions.',
   },
   {
     id: 4,
-    hearing_code: 'HRG-2026-044',
-    title: 'Budget Deliberation: Supplemental FY 2026 Typhoon Resilience Fund',
-    type: 'committee_hearing',
+    session_code: 'SES-2026-044',
+    title: 'Special Session: Supplemental FY 2026 Typhoon Resilience Fund',
+    type: 'special_session',
     date: '2026-11-27',
     time: '09:30 AM',
     venue: 'Naga City People\'s Hall',
     committee: 'Committee on Appropriations',
     presiding_officer: 'Hon. Juan Miguel Perez',
-    linked_measure: { id: 4, code: 'Ord. No. 2026-090', stage: 'calendared' },
+    linked_document: { id: 4, code: 'Ord. No. 2026-090', stage: 'calendared' },
     status: 'scheduled',
     agenda_count: 2,
-    notes: 'Urgent appropriation review for Bicol River Basin flood mitigation and emergency records backup.',
+    notes: 'Urgent appropriation session for Bicol River Basin flood mitigation and emergency records backup.',
   },
   {
     id: 5,
-    hearing_code: 'HRG-2026-045',
-    title: 'Public Consultation: Youth Digital Skills & Technology Hub Grant',
-    type: 'public_hearing',
+    session_code: 'SES-2026-045',
+    title: 'Special Session: Youth Digital Skills & Technology Hub Grant',
+    type: 'special_session',
     date: '2026-11-30',
     time: '02:00 PM',
     venue: 'Naga City Youth Center Auditorium',
     committee: 'Committee on Education & Culture',
     presiding_officer: 'Hon. Angela Cristobal',
-    linked_measure: { id: 5, code: 'Ord. No. 2026-087', stage: 'first_reading' },
+    linked_document: { id: 5, code: 'Ord. No. 2026-087', stage: 'first_reading' },
     status: 'scheduled',
     agenda_count: 3,
-    notes: 'Open public consultation with university student councils and SK barangay leaders.',
+    notes: 'Consultative session with university student councils and SK barangay leaders.',
   },
   {
     id: 6,
-    hearing_code: 'HRG-2026-039',
-    title: 'Committee Review: Bantay Kalusugan Mental Health Support Program',
-    type: 'committee_hearing',
+    session_code: 'SES-2026-039',
+    title: 'Committee Session: Bantay Kalusugan Mental Health Support Program',
+    type: 'committee_session',
     date: '2026-11-18',
     time: '10:00 AM',
-    venue: 'Committee Room A, Naga City Hall',
+    venue: 'Session Room A, Naga City Hall',
     committee: 'Committee on Health & Sanitation',
     presiding_officer: 'Hon. Dr. Ernesto Valencia',
-    linked_measure: { id: 6, code: 'Ord. No. 2026-086', stage: 'draft_received' },
+    linked_document: { id: 6, code: 'Ord. No. 2026-086', stage: 'draft_received' },
     status: 'completed',
     agenda_count: 2,
-    notes: 'Committee report endorsed for plenary calendaring; minutes uploaded to registry.',
+    notes: 'Committee report endorsed for plenary calendaring; session minutes uploaded to registry.',
   },
 ];
 
@@ -120,13 +120,13 @@ const TYPE_META = {
     dot: 'bg-[#0B3568]',
     pill: 'bg-sky-100 text-[#0B3568] border-sky-300',
   },
-  public_hearing: {
-    label: 'Public Hearing',
+  special_session: {
+    label: 'Special Session',
     dot: 'bg-emerald-600',
     pill: 'bg-emerald-100 text-emerald-800 border-emerald-300',
   },
-  committee_hearing: {
-    label: 'Committee Hearing',
+  committee_session: {
+    label: 'Committee Session',
     dot: 'bg-amber-500',
     pill: 'bg-amber-100 text-amber-900 border-amber-300',
   },
@@ -156,15 +156,15 @@ const MONTH_NAMES = [
 ];
 
 /**
- * Legislative Hearing & Session Calendar
- * Tracks Naga City SP regular sessions, committee hearings, and public consultations
- * linked directly to legislative measures and reading stages.
+ * Legislative Session Calendar
+ * Tracks Naga City SP regular sessions, committee sessions, and special sessions
+ * linked directly to legislative documents and reading stages.
  */
 export const CalendarPage = () => {
   const { isUploader } = useAuth();
   const { announce } = useAccessibility();
 
-  const [hearings, setHearings] = useState(INITIAL_HEARINGS);
+  const [sessions, setSessions] = useState(INITIAL_SESSIONS);
   const [currentYear, setCurrentYear] = useState(2026);
   const [currentMonth, setCurrentMonth] = useState(10); // November (0-indexed)
   const [selectedDate, setSelectedDate] = useState(null);
@@ -173,30 +173,29 @@ export const CalendarPage = () => {
   // Schedule Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTitle, setNewTitle] = useState('');
-  const [newType, setNewType] = useState('committee_hearing');
+  const [newType, setNewType] = useState('committee_session');
   const [newDate, setNewDate] = useState('2026-11-28');
   const [newTime, setNewTime] = useState('10:00 AM');
-  const [newVenue, setNewVenue] = useState('Committee Room A, Naga City Hall');
+  const [newVenue, setNewVenue] = useState('SP Session Hall, Naga City Hall');
   const [newCommittee, setNewCommittee] = useState('Committee on Laws, Rules & Ordinances');
-  const [newMeasureCode, setNewMeasureCode] = useState('Ord. No. 2026-089');
+  const [newDocCode, setNewDocCode] = useState('Ord. No. 2026-089');
   const [newNotes, setNewNotes] = useState('');
 
   useEffect(() => {
-    const fetchHearings = async () => {
+    const fetchSessions = async () => {
       try {
         const res = await api.get('/hearings');
         const list = res.data?.data || res.data;
         if (Array.isArray(list) && list.length > 0) {
-          setHearings(list);
+          setSessions(list);
         }
       } catch {
         // Offline demonstration fallback active
       }
     };
-    fetchHearings();
+    fetchSessions();
   }, []);
 
-  // Calendar grid generation
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const calendarCells = [];
@@ -234,13 +233,13 @@ export const CalendarPage = () => {
   };
 
   const handleStatusToggle = (id) => {
-    setHearings((prev) =>
-      prev.map((h) => {
-        if (h.id !== id) return h;
+    setSessions((prev) =>
+      prev.map((s) => {
+        if (s.id !== id) return s;
         const nextStatus =
-          h.status === 'scheduled' ? 'in_session' : h.status === 'in_session' ? 'completed' : 'scheduled';
-        announce(`Hearing ${h.hearing_code} status updated to ${STATUS_META[nextStatus].label}.`, 'polite');
-        return { ...h, status: nextStatus };
+          s.status === 'scheduled' ? 'in_session' : s.status === 'in_session' ? 'completed' : 'scheduled';
+        announce(`Session ${s.session_code} status updated to ${STATUS_META[nextStatus].label}.`, 'polite');
+        return { ...s, status: nextStatus };
       })
     );
   };
@@ -251,7 +250,7 @@ export const CalendarPage = () => {
 
     const created = {
       id: Date.now(),
-      hearing_code: `HRG-2026-0${46 + hearings.length}`,
+      session_code: `SES-2026-0${46 + sessions.length}`,
       title: newTitle.trim(),
       type: newType,
       date: newDate,
@@ -259,31 +258,31 @@ export const CalendarPage = () => {
       venue: newVenue,
       committee: newCommittee,
       presiding_officer: 'Assigned Committee Chair',
-      linked_measure: { id: 1, code: newMeasureCode || 'Ord. No. 2026-089', stage: 'calendared' },
+      linked_document: { id: 1, code: newDocCode || 'Ord. No. 2026-089', stage: 'calendared' },
       status: 'scheduled',
       agenda_count: 1,
-      notes: newNotes || 'Scheduled via LegisVault Secretariat Calendar.',
+      notes: newNotes || 'Scheduled via LegisVault Secretariat Session Calendar.',
     };
 
-    setHearings((prev) => [created, ...prev]);
+    setSessions((prev) => [created, ...prev]);
     setIsModalOpen(false);
     setNewTitle('');
     setNewNotes('');
     setSelectedDate(newDate);
-    announce(`Scheduled new hearing: ${created.title} on ${created.date}.`, 'polite');
+    announce(`Scheduled new session: ${created.title} on ${created.date}.`, 'polite');
   };
 
-  const filteredHearings = hearings.filter((h) => {
-    const matchesType = typeFilter === 'all' || h.type === typeFilter;
-    const matchesDate = !selectedDate || h.date === selectedDate;
+  const filteredSessions = sessions.filter((s) => {
+    const matchesType = typeFilter === 'all' || s.type === typeFilter;
+    const matchesDate = !selectedDate || s.date === selectedDate;
     return matchesType && matchesDate;
   });
 
   const stats = {
-    total: hearings.length,
-    active: hearings.filter((h) => h.status === 'in_session').length,
-    scheduled: hearings.filter((h) => h.status === 'scheduled').length,
-    completed: hearings.filter((h) => h.status === 'completed').length,
+    total: sessions.length,
+    active: sessions.filter((s) => s.status === 'in_session').length,
+    scheduled: sessions.filter((s) => s.status === 'scheduled').length,
+    completed: sessions.filter((s) => s.status === 'completed').length,
   };
 
   return (
@@ -292,10 +291,10 @@ export const CalendarPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-secondary-500 tracking-tight">
-            Legislative Hearing & Session Calendar
+            Legislative Session Calendar
           </h1>
           <p className="mt-1 text-sm text-secondary-400">
-            Track Sangguniang Panlungsod regular sessions, committee hearings, and public consultations linked to active ordinances.
+            Track Sangguniang Panlungsod regular sessions, committee sessions, and special sessions linked to active legislative documents.
           </p>
         </div>
 
@@ -305,17 +304,17 @@ export const CalendarPage = () => {
             size="md"
             leftIcon={<PlusIcon className="h-5 w-5" />}
             onClick={() => setIsModalOpen(true)}
-            ariaLabel="Schedule a new legislative hearing or session"
+            ariaLabel="Schedule a new legislative session"
           >
-            Schedule Hearing
+            Schedule Session
           </AccessibleButton>
         )}
       </div>
 
-      {/* Hearing Summary Metrics Strip */}
+      {/* Session Summary Metrics Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500">Total Calendar Events</p>
+          <p className="text-xs font-semibold text-slate-500">Total Scheduled Sessions</p>
           <p className="mt-1.5 text-2xl font-extrabold text-secondary-500">{stats.total}</p>
           <p className="mt-0.5 text-xs text-slate-400">November 2026 docket</p>
         </div>
@@ -325,12 +324,12 @@ export const CalendarPage = () => {
           <p className="mt-0.5 text-xs text-emerald-700/80">Live plenary floor action</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500">Upcoming Hearings</p>
+          <p className="text-xs font-semibold text-slate-500">Upcoming Sessions</p>
           <p className="mt-1.5 text-2xl font-extrabold text-[#0B3568]">{stats.scheduled}</p>
-          <p className="mt-0.5 text-xs text-slate-400">Committee & public hearings</p>
+          <p className="mt-0.5 text-xs text-slate-400">Committee &amp; special sessions</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500">Completed Hearings</p>
+          <p className="text-xs font-semibold text-slate-500">Completed Sessions</p>
           <p className="mt-1.5 text-2xl font-extrabold text-slate-700">{stats.completed}</p>
           <p className="mt-0.5 text-xs text-slate-400">Minutes archived in registry</p>
         </div>
@@ -339,7 +338,7 @@ export const CalendarPage = () => {
       {/* Filter Bar */}
       <div
         role="region"
-        aria-label="Filter legislative hearings by type"
+        aria-label="Filter legislative sessions by category"
         className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs"
       >
         <div className="flex flex-wrap items-center gap-2">
@@ -348,10 +347,10 @@ export const CalendarPage = () => {
             Filter:
           </span>
           {[
-            { key: 'all', label: 'All Events' },
+            { key: 'all', label: 'All Sessions' },
             { key: 'regular_session', label: 'Regular Sessions' },
-            { key: 'public_hearing', label: 'Public Hearings' },
-            { key: 'committee_hearing', label: 'Committee Hearings' },
+            { key: 'special_session', label: 'Special Sessions' },
+            { key: 'committee_session', label: 'Committee Sessions' },
           ].map((opt) => (
             <button
               key={opt.key}
@@ -380,7 +379,7 @@ export const CalendarPage = () => {
         )}
       </div>
 
-      {/* Main Split Grid: Monthly Calendar (Left) + Hearing Schedule Tracker (Right) */}
+      {/* Main Split Grid: Monthly Calendar (Left) + Session Schedule Tracker (Right) */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
         {/* Monthly Calendar Grid */}
         <section
@@ -430,15 +429,15 @@ export const CalendarPage = () => {
           </div>
 
           {/* Day Cells */}
-          <div className="grid grid-cols-7 gap-1.5" role="grid" aria-label={`${MONTH_NAMES[currentMonth]} ${currentYear} hearing schedule`}>
+          <div className="grid grid-cols-7 gap-1.5" role="grid" aria-label={`${MONTH_NAMES[currentMonth]} ${currentYear} session schedule`}>
             {calendarCells.map((day, idx) => {
               if (!day) {
                 return <div key={`empty-${idx}`} className="h-24 rounded-lg bg-slate-50/60" aria-hidden="true" />;
               }
 
               const iso = formatIso(currentYear, currentMonth, day);
-              const dayEvents = hearings.filter(
-                (h) => h.date === iso && (typeFilter === 'all' || h.type === typeFilter)
+              const dayEvents = sessions.filter(
+                (s) => s.date === iso && (typeFilter === 'all' || s.type === typeFilter)
               );
               const isSelected = selectedDate === iso;
               const isToday = iso === '2026-11-24';
@@ -449,7 +448,7 @@ export const CalendarPage = () => {
                   type="button"
                   onClick={() => setSelectedDate(isSelected ? null : iso)}
                   aria-pressed={isSelected}
-                  aria-label={`${MONTH_NAMES[currentMonth]} ${day}, ${currentYear}, ${dayEvents.length} scheduled hearings`}
+                  aria-label={`${MONTH_NAMES[currentMonth]} ${day}, ${currentYear}, ${dayEvents.length} scheduled sessions`}
                   className={`h-24 p-1.5 rounded-lg border text-left flex flex-col justify-between transition-all focus-ring ${
                     isSelected
                       ? 'border-[#0B3568] bg-sky-50 ring-2 ring-[#0B3568]/20'
@@ -504,51 +503,51 @@ export const CalendarPage = () => {
             </span>
             <span className="inline-flex items-center gap-1.5 font-medium">
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" aria-hidden="true" />
-              Public Hearing
+              Special Session
             </span>
             <span className="inline-flex items-center gap-1.5 font-medium">
               <span className="h-2.5 w-2.5 rounded-full bg-amber-500" aria-hidden="true" />
-              Committee Hearing
+              Committee Session
             </span>
           </div>
         </section>
 
-        {/* Hearing Schedule & Tracking List */}
+        {/* Session Schedule & Tracking List */}
         <section
-          aria-labelledby="hearing-tracker-heading"
+          aria-labelledby="session-tracker-heading"
           className="xl:col-span-5 space-y-4"
         >
           <div className="flex items-center justify-between">
-            <h2 id="hearing-tracker-heading" className="text-lg font-extrabold text-secondary-500">
-              Hearing Tracking Docket ({filteredHearings.length})
+            <h2 id="session-tracker-heading" className="text-lg font-extrabold text-secondary-500">
+              Session Tracking Docket ({filteredSessions.length})
             </h2>
           </div>
 
-          {filteredHearings.length === 0 ? (
+          {filteredSessions.length === 0 ? (
             <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
               <CalendarDaysIcon className="mx-auto h-10 w-10 text-slate-300" aria-hidden="true" />
-              <p className="mt-2 text-sm font-bold text-slate-700">No hearings scheduled for this date</p>
+              <p className="mt-2 text-sm font-bold text-slate-700">No sessions scheduled for this date</p>
               <p className="mt-1 text-xs text-slate-500">Select another date or clear the date filter to view the full docket.</p>
             </div>
           ) : (
             <ul role="list" className="space-y-3">
-              {filteredHearings.map((hearing) => {
-                const tMeta = TYPE_META[hearing.type] || TYPE_META.committee_hearing;
-                const sMeta = STATUS_META[hearing.status] || STATUS_META.scheduled;
+              {filteredSessions.map((session) => {
+                const tMeta = TYPE_META[session.type] || TYPE_META.committee_session;
+                const sMeta = STATUS_META[session.status] || STATUS_META.scheduled;
                 const StatusIcon = sMeta.icon;
 
                 return (
                   <li
-                    key={hearing.id}
+                    key={session.id}
                     className={`rounded-xl border bg-white p-4 shadow-xs transition-all ${
-                      hearing.status === 'in_session'
+                      session.status === 'in_session'
                         ? 'border-l-4 border-l-emerald-600 border-slate-200'
                         : 'border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-xs font-extrabold text-[#0B3568]">{hearing.hearing_code}</span>
+                        <span className="text-xs font-extrabold text-[#0B3568]">{session.session_code}</span>
                         <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-bold ${tMeta.pill}`}>
                           {tMeta.label}
                         </span>
@@ -561,36 +560,35 @@ export const CalendarPage = () => {
                     </div>
 
                     <h3 className="mt-2 text-sm font-extrabold text-secondary-500 leading-snug">
-                      {hearing.title}
+                      {session.title}
                     </h3>
 
                     <div className="mt-2.5 space-y-1 text-xs text-slate-600">
                       <p className="flex items-center gap-1.5">
                         <ClockIcon className="h-4 w-4 text-slate-400 shrink-0" aria-hidden="true" />
-                        <span className="font-semibold text-secondary-500">{hearing.date}</span>
-                        <span>at {hearing.time} PHT</span>
+                        <span className="font-semibold text-secondary-500">{session.date}</span>
+                        <span>at {session.time} PHT</span>
                       </p>
                       <p className="flex items-center gap-1.5">
                         <MapPinIcon className="h-4 w-4 text-slate-400 shrink-0" aria-hidden="true" />
-                        <span>{hearing.venue}</span>
+                        <span>{session.venue}</span>
                       </p>
                       <p className="flex items-center gap-1.5">
                         <UserGroupIcon className="h-4 w-4 text-slate-400 shrink-0" aria-hidden="true" />
-                        <span>{hearing.committee}</span>
+                        <span>{session.committee}</span>
                       </p>
                     </div>
 
-                    {/* Linked Measure & Stage */}
-                    {hearing.linked_measure && (
+                    {session.linked_document && (
                       <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
                         <Link
-                          to={`/documents/${hearing.linked_measure.id}`}
+                          to={`/documents/${session.linked_document.id}`}
                           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0B3568] hover:underline focus-ring rounded"
                         >
                           <DocumentTextIcon className="h-4 w-4" aria-hidden="true" />
-                          <span>{hearing.linked_measure.code}</span>
+                          <span>{session.linked_document.code}</span>
                         </Link>
-                        <StatusBadge status={hearing.linked_measure.stage} size="sm" />
+                        <StatusBadge status={session.linked_document.stage} size="sm" />
                       </div>
                     )}
 
@@ -598,12 +596,12 @@ export const CalendarPage = () => {
                       <div className="mt-3 flex justify-end">
                         <button
                           type="button"
-                          onClick={() => handleStatusToggle(hearing.id)}
+                          onClick={() => handleStatusToggle(session.id)}
                           className="min-h-[36px] rounded-lg border border-slate-200 px-3 py-1 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 focus-ring"
                         >
-                          {hearing.status === 'scheduled'
+                          {session.status === 'scheduled'
                             ? 'Mark In Session'
-                            : hearing.status === 'in_session'
+                            : session.status === 'in_session'
                             ? 'Mark Completed'
                             : 'Reopen Schedule'}
                         </button>
@@ -617,12 +615,12 @@ export const CalendarPage = () => {
         </section>
       </div>
 
-      {/* Schedule New Hearing Modal */}
+      {/* Schedule New Session Modal */}
       <AccessibleModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Schedule Legislative Hearing or Session"
-        description="Register a new Sangguniang Panlungsod hearing onto the official secretariat calendar."
+        title="Schedule Legislative Council Session"
+        description="Register a new Sangguniang Panlungsod session onto the official secretariat calendar."
         footer={
           <>
             <AccessibleButton variant="outline" onClick={() => setIsModalOpen(false)}>
@@ -636,25 +634,25 @@ export const CalendarPage = () => {
       >
         <form onSubmit={handleScheduleSubmit} className="space-y-4">
           <FormField
-            id="hearing-title"
-            label="Hearing / Session Title"
+            id="session-title"
+            label="Session Title"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            placeholder="e.g. Public Hearing: Naga River Ecological Code"
+            placeholder="e.g. Committee Session: Naga River Ecological Code"
             required
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField
-              id="hearing-date"
-              label="Hearing Date"
+              id="session-date"
+              label="Session Date"
               type="date"
               value={newDate}
               onChange={(e) => setNewDate(e.target.value)}
               required
             />
             <FormField
-              id="hearing-time"
+              id="session-time"
               label="Start Time (PHT)"
               value={newTime}
               onChange={(e) => setNewTime(e.target.value)}
@@ -665,31 +663,31 @@ export const CalendarPage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="hearing-type" className="block text-sm font-bold text-secondary-500 mb-1.5">
-                Event Category <span className="text-error">*</span>
+              <label htmlFor="session-type" className="block text-sm font-bold text-secondary-500 mb-1.5">
+                Session Category <span className="text-error">*</span>
               </label>
               <select
-                id="hearing-type"
+                id="session-type"
                 value={newType}
                 onChange={(e) => setNewType(e.target.value)}
                 className="w-full min-h-[44px] rounded-lg border-slate-300 text-sm focus-ring"
               >
                 <option value="regular_session">Regular Session</option>
-                <option value="public_hearing">Public Hearing</option>
-                <option value="committee_hearing">Committee Hearing</option>
+                <option value="special_session">Special Session</option>
+                <option value="committee_session">Committee Session</option>
               </select>
             </div>
             <FormField
-              id="hearing-measure"
-              label="Linked Ordinance / Resolution No."
-              value={newMeasureCode}
-              onChange={(e) => setNewMeasureCode(e.target.value)}
+              id="session-document"
+              label="Linked Ordinance / Document No."
+              value={newDocCode}
+              onChange={(e) => setNewDocCode(e.target.value)}
               placeholder="e.g. Ord. No. 2026-089"
             />
           </div>
 
           <FormField
-            id="hearing-venue"
+            id="session-venue"
             label="Session Hall / Committee Venue"
             value={newVenue}
             onChange={(e) => setNewVenue(e.target.value)}
@@ -697,7 +695,7 @@ export const CalendarPage = () => {
           />
 
           <FormField
-            id="hearing-committee"
+            id="session-committee"
             label="Sponsoring Committee"
             value={newCommittee}
             onChange={(e) => setNewCommittee(e.target.value)}
@@ -705,13 +703,13 @@ export const CalendarPage = () => {
           />
 
           <FormField
-            id="hearing-notes"
-            label="Agenda & Public Notice Remarks"
+            id="session-notes"
+            label="Order of Business & Agenda Remarks"
             type="textarea"
             rows={2}
             value={newNotes}
             onChange={(e) => setNewNotes(e.target.value)}
-            placeholder="Key agenda items, invited resource speakers, or committee instructions..."
+            placeholder="Key agenda items, committee referrals, or deliberation notes..."
           />
         </form>
       </AccessibleModal>

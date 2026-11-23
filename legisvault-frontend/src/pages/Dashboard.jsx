@@ -30,7 +30,7 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
-const UPCOMING_HEARINGS = [
+const UPCOMING_SESSIONS = [
   {
     id: 1,
     code: 'SP-2026-14RS',
@@ -43,28 +43,28 @@ const UPCOMING_HEARINGS = [
   },
   {
     id: 2,
-    code: 'HRG-2026-042',
-    title: 'Public Hearing: Ord. No. 2026-089 (Digital Archiving)',
+    code: 'SES-2026-042',
+    title: 'Committee Session: Ord. No. 2026-089 (Digital Archiving)',
     dateLabel: 'NOV 24',
     time: '01:30 PM',
-    venue: 'Committee Room A',
+    venue: 'Session Room A',
     committee: 'Laws, Rules & Ordinances',
     status: 'Today',
   },
   {
     id: 3,
-    code: 'HRG-2026-043',
-    title: 'Committee Hearing: Traffic & Active Mobility Code',
+    code: 'SES-2026-043',
+    title: 'Committee Session: Traffic & Active Mobility Code',
     dateLabel: 'NOV 26',
     time: '10:00 AM',
-    venue: 'Committee Room B',
+    venue: 'Session Room B',
     committee: 'Infrastructure & Public Works',
     status: 'Scheduled',
   },
   {
     id: 4,
-    code: 'HRG-2026-044',
-    title: 'FY 2026 Typhoon Resilience Supplemental Budget',
+    code: 'SES-2026-044',
+    title: 'Special Session: FY 2026 Typhoon Resilience Budget',
     dateLabel: 'NOV 27',
     time: '09:30 AM',
     venue: 'Naga City People\'s Hall',
@@ -282,7 +282,7 @@ export const Dashboard = () => {
           Secretariat Operations Portal
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          Control legislative sessions, track committee hearings, and oversee Naga City digital records — signed in as{' '}
+          Control legislative sessions, track council schedules, and oversee Naga City digital records — signed in as{' '}
           <strong className="text-secondary-500">{user?.name || 'Maria Santos'}</strong>.
         </p>
       </div>
@@ -314,7 +314,7 @@ export const Dashboard = () => {
             </span>
             <span className="inline-flex items-center gap-1">
               <MapPinIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
-              SP Session Hall, Naga City Hall • 4 hearings &amp; 5 agenda measures
+              SP Session Hall, Naga City Hall • 4 scheduled sessions &amp; 5 agenda documents
             </span>
           </div>
         </div>
@@ -325,10 +325,10 @@ export const Dashboard = () => {
               variant="primary"
               size="md"
               leftIcon={<PlayIcon className="h-4 w-4" />}
-              ariaLabel="Open Legislative Hearing Calendar and Session Schedule"
+              ariaLabel="Open Legislative Session Calendar and Schedule"
               className="!bg-[#0B3568] hover:!bg-[#082A54]"
             >
-              View Hearing Calendar
+              View Session Calendar
             </AccessibleButton>
           </Link>
         </div>
@@ -340,7 +340,7 @@ export const Dashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold text-slate-600">Measures Ready for Reading</p>
+              <p className="text-xs font-bold text-slate-600">Documents Ready for Reading</p>
               <DocumentTextIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
             <p className="mt-3 text-3xl font-extrabold text-secondary-500">
@@ -364,13 +364,13 @@ export const Dashboard = () => {
 
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold text-slate-600">Scheduled Hearings</p>
+              <p className="text-xs font-bold text-slate-600">Scheduled Sessions</p>
               <CalendarDaysIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             </div>
             <p className="mt-3 text-3xl font-extrabold text-[#0B3568]">
               {stats?.scheduled_hearings || 6}
             </p>
-            <p className="mt-1 text-xs text-slate-500">2 hearings today • 4 this week</p>
+            <p className="mt-1 text-xs text-slate-500">2 sessions today • 4 this week</p>
           </div>
 
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
@@ -455,17 +455,17 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      {/* Bottom Split Row: Upcoming Hearings Docket + Recent Legislative Activity */}
+      {/* Bottom Split Row: Upcoming Council Sessions Docket + Recent Legislative Documents */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* Upcoming Hearings & Sessions Preview */}
+        {/* Upcoming Council Sessions Preview */}
         <section
-          aria-labelledby="upcoming-hearings-heading"
+          aria-labelledby="upcoming-sessions-heading"
           className="xl:col-span-5 rounded-xl border border-slate-200 bg-white p-5 shadow-xs"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 id="upcoming-hearings-heading" className="text-base font-extrabold text-secondary-500 flex items-center gap-2">
+            <h2 id="upcoming-sessions-heading" className="text-base font-extrabold text-secondary-500 flex items-center gap-2">
               <CalendarDaysIcon className="h-5 w-5 text-[#0B3568]" aria-hidden="true" />
-              Upcoming Hearings &amp; Sessions
+              Upcoming Council Sessions
             </h2>
             <Link to="/calendar" className="text-xs font-bold text-[#0B3568] hover:underline focus-ring rounded p-1">
               Full Calendar →
@@ -473,7 +473,7 @@ export const Dashboard = () => {
           </div>
 
           <ul role="list" className="divide-y divide-slate-100">
-            {UPCOMING_HEARINGS.map((h) => (
+            {UPCOMING_SESSIONS.map((h) => (
               <li key={h.id} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
                 <div className="w-12 shrink-0 rounded-lg bg-sky-50 border border-sky-200 py-1.5 text-center">
                   <span className="block text-[10px] font-extrabold text-[#0B3568]">{h.dateLabel}</span>

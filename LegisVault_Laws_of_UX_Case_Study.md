@@ -28,14 +28,14 @@
 
 ### 1.2 Target User Cohorts & Main User Flows
 1. **Role-Based Onboarding & Secretariat Portal (`Login.jsx` → `Dashboard.jsx`):** Sanctum bearer-token authentication routes Admins, Uploaders, and Viewers to a grouped royal-navy executive portal featuring an **Active Session Banner**, `Ctrl+K` global command search, 4 KPI cards, and a 3-column analytics row.
-2. **Legislative Hearing & Session Calendar (`CalendarPage.jsx` — `/calendar`):** Interactive monthly calendar grid and **Hearing Tracking Docket** linking regular sessions, committee hearings, and public consultations directly to active ordinances and reading stages.
+2. **Legislative Session Calendar (`CalendarPage.jsx` — `/calendar`):** Interactive monthly calendar grid and **Session Tracking Docket** linking regular sessions, committee sessions, and special sessions directly to active legislative documents and reading stages.
 3. **Multi-Criteria Legislative Search & Retrieval (`SearchPage.jsx` & `DocumentRepository.jsx`):** Councilors and researchers filter 1,400+ enactments concurrently by keyword/OCR text, ordinance number, sponsoring committee, enacted year, document type, and reading stage in under 2 minutes.
 4. **Document Digitization & Metadata Indexing (`UploadDocument.jsx`):** Records clerks upload PDF/DOCX enactments, capture 7 mandatory bibliographic metadata fields, and trigger automated OCR text extraction.
 5. **5-Stage Legislative Reading Workflow Tracking & Forensic Auditing (`OrdinanceDetail.jsx`, `WorkflowTracker.jsx`, `AuditLogs.jsx`):** Authorized clerks advance legislative measures sequentially across the 5 statutory stages with session notes and JSON-diffed audit trails.
 
 ### 1.3 Key Interfaces Evaluated (Actual Live System Screenshots)
 ![LegisVault Key Interfaces Overview](ux_case_study_assets/fig1_key_interfaces.png)
-*Figure 1: Actual live screenshots captured from the upgraded LegisVault React + Tailwind CSS application across its four main screens: (A) Secretariat Operations Portal (`/dashboard`), (B) Legislative Hearing & Session Calendar (`/calendar`), (C) Master Legislative Repository (`/documents`), and (D) Ordinance Detail & 5-Stage Reading Timeline (`/documents/1`).*
+*Figure 1: Actual live screenshots captured from the upgraded LegisVault React + Tailwind CSS application across its four main screens: (A) Secretariat Operations Portal (`/dashboard`), (B) Legislative Session Calendar (`/calendar`), (C) Master Legislative Repository (`/documents`), and (D) Ordinance Detail & 5-Stage Reading Timeline (`/documents/1`).*
 
 ---
 

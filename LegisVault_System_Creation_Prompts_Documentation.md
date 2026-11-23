@@ -18,7 +18,7 @@
 | **Prompt 1** | Core 3-Tier System Scaffolding | Presentation, Application, & Data Tiers | Foundational React + Tailwind SPA, Laravel 11 REST API, MySQL schema, RBAC, 5-Stage Workflow, Search |
 | **Prompt 2** | Backend API, RBAC & Database Engineering | Application & Data Tiers (`legisvault-api/`) | 8 MySQL migrations, Eloquent models, `RoleMiddleware`, `AuditMiddleware`, REST controllers, Naga City seeders |
 | **Prompt 3** | WCAG 2.2 Level AA Frontend Component System | Presentation Tier (`legisvault-frontend/`) | Accessible UI primitives (`StatusBadge`, `AccessibleModal`, `FormField`, `WorkflowTracker`, High Contrast Mode) |
-| **Prompt 4** | Executive Portal UI Upgrade & Hearing Calendar | Full-Stack (`legisvault-frontend/` + `legisvault-api/`) | Royal-Navy grouped Sidebar, `Ctrl+K` Header, Active Session Hero, 3-Column Analytics, **Hearing Calendar (`/calendar`)** |
+| **Prompt 4** | Executive Portal UI Upgrade & Session Calendar | Full-Stack (`legisvault-frontend/` + `legisvault-api/`) | Royal-Navy grouped Sidebar, `Ctrl+K` Header, Active Session Hero, 3-Column Analytics, **Session Calendar (`/calendar`)** |
 | **Prompt 5** | Authentication Resilience & RBAC Demo Fallback | Presentation Tier (`AuthContext.jsx`, `Login.jsx`) | Proxy-aware offline session fallback & one-click `Admin`, `Uploader`, and `Viewer` demonstration sign-in |
 
 ---
@@ -128,27 +128,27 @@ Core Pages & Route Guards:
 
 ---
 
-## Prompt 4: Executive Portal UI Layout Upgrade & Legislative Hearing Calendar
+## Prompt 4: Executive Portal UI Layout Upgrade & Legislative Session Calendar
 
 ### 4.1 Objective & Engineering Context
-Refine the LegisVault UI layout to match modern executive legislative portal ergonomics (inspired by `legis.com.ph/#top` without verbatim copying) and introduce a dedicated **Legislative Hearing & Session Calendar** to track regular sessions, committee hearings, and public consultations linked to ordinances.
+Refine the LegisVault UI layout to match modern executive legislative portal ergonomics (inspired by `legis.com.ph/#top` without verbatim copying) and introduce a dedicated **Legislative Session Calendar** to track regular sessions, committee sessions, and special sessions linked to legislative documents.
 
 ### 4.2 Exact System Creation Prompt Used
 ```text
 https://legis.com.ph/#top
 
-Visit this layout and improve the design UI layout of our system based on this. Do not exactly copy the layout from the link, but rather it should look like an executive legislative portal tailored for Naga City and must include key features needed for our system — specifically adding a Calendar module that lists the tracking and schedule of each legislative hearing and council session.
+Visit this layout and improve the design UI layout of our system based on this. Do not exactly copy the layout from the link, but rather it should look like an executive legislative portal tailored for Naga City and must include key features needed for our system — specifically adding a Calendar module that lists the tracking and schedule of each council session.
 ```
 
 ### 4.3 Technical Refinements & New Features Produced
 1. **Grouped Deep Civic Royal-Navy Sidebar ([`Sidebar.jsx`](./legisvault-frontend/src/components/layout/Sidebar.jsx)):**
-   - Re-architected navigation into three semantic groups (*Dashboard*, *Legislative*, *Governance & Records*) in a `#0B3568` royal-navy palette with the Naga SP Scales emblem, a live **`Hearing Calendar [6]`** badge, and a bottom-pinned user profile card.
+   - Re-architected navigation into three semantic groups (*Dashboard*, *Legislative*, *Governance & Records*) in a `#0B3568` royal-navy palette with the Naga SP Scales emblem, a live **`Session Calendar [6]`** badge, **`Upload Document`** link, and a bottom-pinned user profile card.
 2. **Executive Command Header ([`Header.jsx`](./legisvault-frontend/src/components/layout/Header.jsx)):**
-   - Added a global **`Ctrl K` keyboard search bar**, quick action links (`+ Upload Measure`, `Hearings`), the WCAG **High Contrast** toggle, and an interactive Hearing Alerts Bell popover.
+   - Added a global **`Ctrl K` keyboard search bar**, quick action links (`+ Upload Document`, `Sessions`), the WCAG **High Contrast** toggle, and an interactive Session Alerts Bell popover.
 3. **Upgraded Secretariat Operations Portal ([`Dashboard.jsx`](./legisvault-frontend/src/pages/Dashboard.jsx)):**
-   - Added the **Active Session Hero Banner** (`Session Active • SP-2026-14RS — 14th Regular Session`), 4 minimalist executive KPI cards, a **3-Column Legislative Analytics Row** (*Measure Status Distribution*, *Ready for Floor Action*, *Top Committees Performance*), and a bottom split view showing the **Upcoming Hearings & Sessions Docket** alongside **Recent Legislative Measures**.
-4. **New Legislative Hearing & Session Calendar Module ([`CalendarPage.jsx`](./legisvault-frontend/src/pages/CalendarPage.jsx) & Laravel Backend):**
-   - Built an interactive monthly calendar grid with color-coded event dots, category filter pills (*Regular Sessions*, *Public Hearings*, *Committee Hearings*), a **Hearing Tracking Docket** linking every hearing directly to its ordinance (`/documents/:id`) and reading stage, one-click status transitions (`Scheduled` → `In Session` → `Completed`), and an accessible **Schedule Hearing** modal.
+   - Added the **Active Session Hero Banner** (`Session Active • SP-2026-14RS — 14th Regular Session`), 4 minimalist executive KPI cards, a **3-Column Legislative Analytics Row** (*Measure Status Distribution*, *Ready for Floor Action*, *Top Committees Performance*), and a bottom split view showing the **Upcoming Council Sessions Docket** alongside **Recent Legislative Measures**.
+4. **New Legislative Session Calendar Module ([`CalendarPage.jsx`](./legisvault-frontend/src/pages/CalendarPage.jsx) & Laravel Backend):**
+   - Built an interactive monthly calendar grid with color-coded event dots, category filter pills (*Regular Sessions*, *Special Sessions*, *Committee Sessions*), a **Session Tracking Docket** linking every session directly to its document (`/documents/:id`) and reading stage, one-click status transitions (`Scheduled` → `In Session` → `Completed`), and an accessible **Schedule Session** modal.
    - Added matching backend persistence: [`2025_01_01_000007_create_hearings_table.php`](./legisvault-api/database/migrations/2025_01_01_000007_create_hearings_table.php), [`Hearing.php`](./legisvault-api/app/Models/Hearing.php), [`HearingController.php`](./legisvault-api/app/Http/Controllers/Api/HearingController.php), and `/api/hearings` endpoints in [`routes/api.php`](./legisvault-api/routes/api.php).
 
 ---

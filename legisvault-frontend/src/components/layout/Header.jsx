@@ -101,8 +101,8 @@ export const Header = ({ onMobileMenuClick, onDesktopToggle, isSidebarCollapsed 
             type="search"
             value={quickQuery}
             onChange={(e) => setQuickQuery(e.target.value)}
-            placeholder="Search LegisVault measures, hearings..."
-            aria-label="Search ordinances, resolutions, and hearings"
+            placeholder="Search LegisVault documents, sessions..."
+            aria-label="Search ordinances, resolutions, and council sessions"
             className="w-full min-h-[40px] rounded-lg border border-slate-300 bg-slate-50 pl-9 pr-14 py-1.5 text-sm text-secondary-500 placeholder:text-slate-400 hover:bg-white focus:bg-white focus:border-[#0B3568] focus-ring transition-colors"
           />
           <kbd
@@ -122,7 +122,7 @@ export const Header = ({ onMobileMenuClick, onDesktopToggle, isSidebarCollapsed 
             className="hidden md:inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold text-[#0B3568] hover:bg-sky-50 border border-transparent hover:border-sky-200 transition-colors focus-ring"
           >
             <PlusIcon className="h-4 w-4 stroke-[2.5]" aria-hidden="true" />
-            <span>Upload Measure</span>
+            <span>Upload Document</span>
           </Link>
         )}
 
@@ -131,7 +131,7 @@ export const Header = ({ onMobileMenuClick, onDesktopToggle, isSidebarCollapsed 
           className="hidden sm:inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors focus-ring"
         >
           <CalendarDaysIcon className="h-4 w-4 text-[#0B3568]" aria-hidden="true" />
-          <span>Hearings</span>
+          <span>Sessions</span>
         </Link>
 
         {/* High Contrast Toggle (WCAG 2.2 AAA Option) */}
